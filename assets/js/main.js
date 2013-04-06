@@ -37,6 +37,7 @@ $(function() {
 				
 				//Lets get the current conditions for this state and city.
 				getCurrentConditions(state,city);
+				getWeather(state,city);
 			}
 		});
 
@@ -47,6 +48,7 @@ $(function() {
 		//new URL
 		conditionURL = baseURL + '/conditions/q/' + state + '/' + city + '.json';
 		yesterdayURL = baseURL + '/yesterday/q/' + state + '/' + city + '.json';
+		var stuff = document.getElementById('stuff');
 		
 		//now query wunderground for current conditions for the city/state, and display 		the Feels Like temp.
 		$.ajax({
@@ -64,16 +66,28 @@ $(function() {
 				test = test.toFixed(0);
 				if (test > 0)
 				{
-				alert('It is ' + test + ' degrees warmer than yesterday.');
+				stuff.innerHTML = 'It is ' + test + ' degrees warmer than yesterday.';
 				}
 				else
 				{
 				test *= -1;
-				alert('It is ' + test + ' degrees colder than yesterday.');
+				stuff.innerHTML = 'It is ' + test + ' degrees colder than yesterday.';
 				}}
 			      });
 						 }
 		     });
+};
+
+	function getWeather(state,city){
+	weatherURL = baseURL + '/conditions/q/' + state + '/' + city + '.json';
+	var weatherpic = document.getElementById('weatherpic');
+	$.ajax({
+		url : weatherURL,
+		dataType : "jsonp",
+		success : function(data) {
+		weatherpic.innerHTML = data.current_observation.weather;
+	}
+	});	
 };
 	
 	getGeoLocation();
