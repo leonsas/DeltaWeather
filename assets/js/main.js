@@ -46,19 +46,25 @@ $(function() {
 		
 		//new URL
 		conditionURL = baseURL + '/conditions/q/' + state + '/' + city + '.json';
+		yesterdayURL = baseURL + '/yesterday/q/' + state + '/' + city + '.json';
 		
-		//now query wunderground for current conditions for the city/state, and display the Feels Like temp.
+		//now query wunderground for current conditions for the city/state, and display 		the Feels Like temp.
 		$.ajax({
-			url : conditionURL,
+			url : yesterdayURL,
 			dataType : "jsonp",
 			success : function(data) {
-				s = data.current_observation.feelslike_string;
-				alert('Currently at ' + city + ', ' + state + '\n It feels like ' + s);
-				
-			}
-		});
-	};
+			
+			$.ajax({
+			        url : conditionURL,
+			        dataType : "jsonp",
+			        success : function(data2) {
+				s1 = data2.current_observation.temp_f;
+				s2 = data.history.dailysummary[0].meantempi;
+				alert('Currently at ' + city + ', ' + state + '\n It feels like ' 			        + s1 + '. Yesterday was ' + s2);}
+			      });
+						 }
+		     });
+};
 	
-	
-	getGeoLocation()
+	getGeoLocation();
 });
