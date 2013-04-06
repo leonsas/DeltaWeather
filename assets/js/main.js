@@ -47,6 +47,7 @@ $(function() {
 		//new URL
 		conditionURL = baseURL + '/conditions/q/' + state + '/' + city + '.json';
 		yesterdayURL = baseURL + '/yesterday/q/' + state + '/' + city + '.json';
+		var stuff = document.getElementById('stuff');
 		
 		//now query wunderground for current conditions for the city/state, and display 		the Feels Like temp.
 		$.ajax({
@@ -64,12 +65,12 @@ $(function() {
 				test = test.toFixed(0);
 				if (test > 0)
 				{
-				alert('It is ' + test + ' degrees warmer than yesterday.');
+				stuff.innerHTML = 'It is ' + test + ' degrees warmer than yesterday.';
 				}
 				else
 				{
 				test *= -1;
-				alert('It is ' + test + ' degrees colder than yesterday.');
+				stuff.innerHTML = 'It is ' + test + ' degrees colder than yesterday.';
 				}}
 			      });
 						 }
