@@ -37,6 +37,7 @@ $(function() {
 				
 				//Lets get the current conditions for this state and city.
 				getCurrentConditions(state,city);
+				getWeather(state,city);
 			}
 		});
 
@@ -75,6 +76,18 @@ $(function() {
 			      });
 						 }
 		     });
+};
+
+	function getWeather(state,city){
+	weatherURL = baseURL + '/conditions/q/' + state + '/' + city + '.json';
+	var weatherpic = document.getElementById('weatherpic');
+	$.ajax({
+		url : weatherURL,
+		dataType : "jsonp",
+		success : function(data) {
+		weatherpic.innerHTML = data.current_observation.weather;
+	}
+	});	
 };
 	
 	getGeoLocation();
