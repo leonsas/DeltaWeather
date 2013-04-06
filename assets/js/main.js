@@ -58,9 +58,19 @@ $(function() {
 			        url : conditionURL,
 			        dataType : "jsonp",
 			        success : function(data2) {
-				s1 = data2.current_observation.temp_f;
-				s2 = data.history.dailysummary[0].meantempi;
-				alert('Currently at ' + city + ', ' + state + '\n It feels like ' 			        + s1 + '. Yesterday was ' + s2);}
+				current = data2.current_observation.temp_f;
+				yesterday = data.history.dailysummary[0].meantempi;
+				test = current - yesterday;
+				test = test.toFixed(0);
+				if (test > 0)
+				{
+				alert('It is ' + test + ' degrees warmer than yesterday.');
+				}
+				else
+				{
+				test *= -1;
+				alert('It is ' + test + ' degrees colder than yesterday.');
+				}}
 			      });
 						 }
 		     });
