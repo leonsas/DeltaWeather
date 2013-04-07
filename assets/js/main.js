@@ -19,7 +19,6 @@ $(function() {
 	}
 
 	function getConditions(position) {
-		//document.body.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
 		getCityLocation(position.coords.latitude, position.coords.longitude);
 	}
 
