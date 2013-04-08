@@ -4,7 +4,7 @@
  *
  */
 $(function() {
-	
+
 	// this is using my api key from wunderground
 	var baseURL = 'http://api.wunderground.com/api/da56c81ebb4c6a60';
 
@@ -26,7 +26,7 @@ $(function() {
 	function getCityLocation(latitude, longitude) {
 		//new URL that does a geolookup to get a city name from lat/lon
 		queryURL = baseURL + '/geolookup/q/' + latitude + ',' + longitude + '.json';
-		
+
 		//GET call that returns the geolookup info
 		$.ajax({
 			url : queryURL,
@@ -34,26 +34,28 @@ $(function() {
 			success : function(data) {
 				state = data.location.state;
 				city = data.location.city;
-				
+
 				//Lets get the current conditions for this state and city.
 				getCurrentConditions(state,city);
+				getWeather(state,city);
 			}
 		});
 
 	};
-	
+
 	function getCurrentConditions(state,city){
-		
+
 		//new URL
 		conditionURL = baseURL + '/conditions/q/' + state + '/' + city + '.json';
 		yesterdayURL = baseURL + '/yesterday/q/' + state + '/' + city + '.json';
-		
+		var stuff = document.getElementById('stuff');
+
 		//now query wunderground for current conditions for the city/state, and display 		the Feels Like temp.
 		$.ajax({
 			url : yesterdayURL,
 			dataType : "jsonp",
 			success : function(data) {
-			
+
 			$.ajax({
 			        url : conditionURL,
 			        dataType : "jsonp",
@@ -64,17 +66,29 @@ $(function() {
 				test = test.toFixed(0);
 				if (test > 0)
 				{
-				alert('It is ' + test + ' degrees warmer than yesterday.');
+				stuff.innerHTML = 'It is ' + test + ' degrees warmer than yesterday.';
 				}
 				else
 				{
 				test *= -1;
-				alert('It is ' + test + ' degrees colder than yesterday.');
+				stuff.innerHTML = 'It is ' + test + ' degrees colder than yesterday.';
 				}}
 			      });
 						 }
 		     });
 };
-	
+
+	function getWeather(state,city){
+	weatherURL = baseURL + '/conditions/q/' + state + '/' + city + '.json';
+	var weatherpic = document.getElementById('weatherpic');
+	$.ajax({
+		url : weatherURL,
+		dataType : "jsonp",
+		success : function(data) {
+		weatherpic.innerHTML = data.current_observation.weather;
+	}
+	});	
+};
+
 	getGeoLocation();
 });
