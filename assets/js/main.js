@@ -49,11 +49,7 @@ $(function() {
 		conditionURL = baseURL + '/conditions/q/' + state + '/' + city + '.json';
 		yesterdayURL = baseURL + '/yesterday/q/' + state + '/' + city + '.json';
 		var stuff = document.getElementById('stuff');
-<<<<<<< HEAD
-		
-=======
 
->>>>>>> UI/Skycons
 		//now query wunderground for current conditions for the city/state, and display 		the Feels Like temp.
 		$.ajax({
 			url : yesterdayURL,
@@ -89,13 +85,6 @@ $(function() {
 		url : weatherURL,
 		dataType : "jsonp",
 		success : function(data) {
-<<<<<<< HEAD
-		weatherpic.innerHTML = data.current_observation.weather;
-	}
-	});	
-};
-	
-=======
 		changeIcon(data.current_observation.weather);
 	}
 	});	
@@ -157,6 +146,5 @@ $(function() {
 	icons.play();
 	};
 
->>>>>>> UI/Skycons
 	getGeoLocation();
 });
