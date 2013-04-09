@@ -3,125 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>DeltaWeather</title>
-  
-  <style>
-    body {
-      font-family: 'Lucida Grande', 'Helvetica Neue', sans-serif;
-      font-size: 13px;
-      background: #abdc28;
-    }
+  <title>&Delta;Weather</title>
 
-    h1 {
-        width: 750px;
-        font-size: 100px;
-        margin: 125px auto;
-        text-align: center;
-        color: #fff;
-        text-shadow: 0px 1px 1px #ddd,
-                     0px 2px 1px #d6d6d6,
-                     0px 3px 1px #ccc,
-                     0px 4px 1px #c5c5c5,
-                     0px 5px 1px #c1c1c1,
-                     0px 6px 1px #bbb,
-                     0px 7px 1px #777,
-                     0px 8px 3px rgba(100, 100, 100, 0.4),
-                     0px 9px 5px rgba(100, 100, 100, 0.1),
-                     0px 10px 7px rgba(100, 100, 100, 0.15),
-                     0px 11px 9px rgba(100, 100, 100, 0.2),
-                     0px 12px 11px rgba(100, 100, 100, 0.25),
-                     0px 13px 15px rgba(100, 100, 100, 0.3);
-    }
-    h2 {
-        width: 750px;
-        font-size: 25px;
-        margin: 100px auto;
-        text-align: center;
-        color: #fff;
-        text-shadow: 0px 1px 1px #ddd,
-                     0px 2px 1px #d6d6d6,
-                     0px 3px 1px #ccc,
-                     0px 4px 1px #c5c5c5,
-                     0px 5px 1px #c1c1c1,
-                     0px 6px 1px #bbb,
-                     0px 7px 1px #777,
-                     0px 8px 3px rgba(100, 100, 100, 0.4),
-                     0px 9px 5px rgba(100, 100, 100, 0.1),
-                     0px 10px 7px rgba(100, 100, 100, 0.15),
-                     0px 11px 9px rgba(100, 100, 100, 0.2),
-                     0px 12px 11px rgba(100, 100, 100, 0.25),
-                     0px 13px 15px rgba(100, 100, 100, 0.3);
-    }
-  </style>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="skycons-master/skycons.js"></script>
+<script src="assets/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 <body>
 
-  <h1>DeltaWeather</h1>
-  
-  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-  <script src="assets/js/main.js"></script>
+  <h1>&Delta;Weather</h1>
 
-<h2 id="weatherpic"></h2>
+<figure class="icons">
+<canvas id="condition" width="128" height="128">
+</canvas>
+</figure>
+
 <h2 id="stuff"></h2>
-
-
-
-
-
-  <figure class="icons">
-        <canvas id="clear-day" width="64" height="64">
-        </canvas>
-
-        <canvas id="clear-night" width="64" height="64">
-        </canvas>
-
-        <canvas id="partly-cloudy-day" width="64" height="64">
-        </canvas>
-
-        <canvas id="partly-cloudy-night" width="64" height="64">
-        </canvas>
-
-        <canvas id="cloudy" width="64" height="64">
-        </canvas>
-
-        <canvas id="rain" width="64" height="64">
-        </canvas>
-
-        <canvas id="sleet" width="64" height="64">
-        </canvas>
-
-        <canvas id="snow" width="64" height="64">
-        </canvas>
-
-        <canvas id="wind" width="64" height="64">
-        </canvas>
-
-        <canvas id="fog" width="64" height="64">
-        </canvas>
-      </figure> 
-
-
-  <script src="skycons-master/skycons.js"></script>
-
-    <script>
-      var icons = new Skycons();
-
-      icons.set("clear-day", Skycons.CLEAR_DAY);
-      icons.set("clear-night", Skycons.CLEAR_NIGHT);
-      icons.set("partly-cloudy-day", Skycons.PARTLY_CLOUDY_DAY);
-      icons.set("partly-cloudy-night", Skycons.PARTLY_CLOUDY_NIGHT);
-      icons.set("cloudy", Skycons.CLOUDY);
-      icons.set("rain", Skycons.RAIN);
-      icons.set("sleet", Skycons.SLEET);
-      icons.set("snow", Skycons.SNOW);
-      icons.set("wind", Skycons.WIND);
-      icons.set("fog", Skycons.FOG);
-
-      icons.play();
-    </script>
-
-  
-
 
 </body>
 

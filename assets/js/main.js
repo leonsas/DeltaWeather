@@ -85,10 +85,66 @@ $(function() {
 		url : weatherURL,
 		dataType : "jsonp",
 		success : function(data) {
-		weatherpic.innerHTML = data.current_observation.weather;
+		changeIcon(data.current_observation.weather);
 	}
 	});	
 };
+
+	function changeIcon(conditions){
+	var icons = new Skycons();
+	switch(conditions)
+	{
+	case "Clear":
+	icons.set("condition", Skycons.CLEAR_DAY);
+	break;
+	case "Cloudy":
+	icons.set("condition", Skycons.CLOUDY);
+	break;
+	case "Rain":
+	icons.set("condition", Skycons.RAIN);
+	break;
+	case "Sleet":
+	icons.set("condition", Skycons.SLEET);
+	break;
+	case "Snow":
+	icons.set("condition", Skycons.SNOW);
+	break;
+	case "Fog":
+	icons.set("condition", Skycons.FOG);
+	break;
+	case "Thunderstorms":
+	icons.set("condition", Skycons.RAIN);
+	break;
+	case "Thunderstorm":
+	icons.set("condition", Skycons.RAIN);
+	break;
+	case "Overcast":
+	icons.set("condition", Skycons.CLOUDY);
+	break;
+	case "Scattered Clouds":
+	icons.set("condition", Skycons.CLOUDY);
+	break;
+	case "Mostly Cloudy":
+	icons.set("condition", Skycons.CLOUDY);
+	break;
+	case "Mostly Sunny":
+	icons.set("condition", Skycons.CLEAR_DAY);
+	break;
+	case "Partly Cloudy":
+	icons.set("condition", Skycons.PARTLY_CLOUDY_DAY);
+	break;
+	case "Partly Sunny":
+	icons.set("condition", Skycons.PARTLY_CLOUDY_DAY);
+	break;
+	case "Freezing Rain":
+	icons.set("condition", Skycons.SLEET);
+	break;
+	default:
+	icons.set("condition", Skycons.CLEAR_DAY);
+	break;
+	}
+	icons.play();
+	};
 
 	getGeoLocation();
 });
