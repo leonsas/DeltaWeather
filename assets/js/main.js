@@ -6,7 +6,9 @@
 $(function() {
 
 	// this is using my api key from wunderground
-	var baseURL = 'http://api.wunderground.com/api/da56c81ebb4c6a60';
+	// 394yellow@gmail.com 	def220061728b00b
+	// leonsassonha  da56c81ebb4c6a60
+	var baseURL = 'http://api.wunderground.com/api/def220061728b00b';
 
 	function getGeoLocation() {
 		//check if geolocation is enabled (i.e browser supports it, and users enables it.)
@@ -61,6 +63,9 @@ $(function() {
 						
 						weatherpic = document.getElementById('weatherpic');
 						current = data2.current_observation.temp_f;
+						
+						$("#current_temp").text(current + '°F')
+						
 						yesterday = data.history.dailysummary[0].meantempi;
 						
 						changeIcon(data2.current_observation.weather);
@@ -68,10 +73,10 @@ $(function() {
 						test = current - yesterday;
 						test = test.toFixed(0);
 						if (test > 0) {
-							stuff.innerHTML = 'It is ' + test + ' degrees warmer than yesterday.';
+							stuff.innerHTML = test + '° warmer than yesterday.';
 						} else {
 							test *= -1;
-							stuff.innerHTML = 'It is ' + test + ' degrees colder than yesterday.';
+							stuff.innerHTML = test + '° colder than yesterday.';
 						}
 					}
 				});
@@ -81,7 +86,7 @@ $(function() {
 
 
 	function changeIcon(conditions) {
-		var icons = new Skycons();
+		var icons = new Skycons({'color':'gray'});
 		switch(conditions) {
 			case "Clear":
             case "Mostly Sunny":
