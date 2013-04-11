@@ -83,6 +83,7 @@ $(function() {
 			dataType : "jsonp",
 			success : function(data) {
 				changeIcon(data.current_observation.weather);
+                weatherpic.innerHTML = data.current_observation.weather;
 			}
 		});
 	};
@@ -91,49 +92,120 @@ $(function() {
 		var icons = new Skycons();
 		switch(conditions) {
 			case "Clear":
+            case "Mostly Sunny":
 				icons.set("condition", Skycons.CLEAR_DAY);
 				break;
-			case "Cloudy":
-				icons.set("condition", Skycons.CLOUDY);
-				break;
 			case "Rain":
+            case "Drizzle":
+            case "Light Drizzle":
+            case "Heavy Drizzle":
+            case "Rain":
+            case "Light Rain":
+            case "Heavy Rain":
+            case "Rain Mist":
+            case "Light Rain Mist":
+            case "Heavy Rain Mist":
+            case "Rain Showers":
+            case "Light Rain Showers":
+            case "Heavy Rain Showers":
+            case "Unknown Precipitation":
+            case "Thunderstorm":
+            case "Light Thunderstorm":
+            case "Heavy Thunderstorm":
+            case "Thunderstorms and Rain":
+            case "Light Thunderstorms and Rain":
+            case "Heavy Thunderstorms and Rain":
+            case "Thunderstorms and Snow":
+            case "Light Thunderstorms and Snow":
+            case "Heavy Thunderstorms and Snow":
+            case "Thunderstorms and Ice Pellets":
+            case "Light Thunderstorms and Ice Pellets":
+            case "Heavy Thunderstorms and Ice Pellets":
+            case "Thunderstorms and Hail":
+            case "Light Thunderstorms and Hail":
+            case "Heavy Thunderstorms and Hail":
+            case "Thunderstorms and Small Hail":
+            case "Light Thunderstorms and Small Hail":
+            case "Heavy Thunderstorms and Small Hail":
+            case "Freezing Drizzle":
+            case "Light Freezing Drizzle":
+            case "Heavy Freezing Drizzle":
+            case "Freezing Rain":
+            case "Light Freezing Rain":
+            case "Heavy Freezing Rain":
 				icons.set("condition", Skycons.RAIN);
 				break;
 			case "Sleet":
 				icons.set("condition", Skycons.SLEET);
 				break;
 			case "Snow":
+  			case "Light Snow":
+  			case "Heavy Snow":
+  			case "Snow Grains":
+  			case "Light Snow Grains":
+  			case "Heavy Snow Grains":
+  			case "Ice Crystals":
+  			case "Light Ice Crystals":
+  			case "Heavy Ice Crystals":
+  			case "Ice Pellets":
+  			case "Light Ice Pellets":
+  			case "Heavy Ice Pellets":
+  			case "Hail":
+  			case "Light Hail":
+  			case "Heavy Hail":
+  			case "Low Drifting Snow":
+  			case "Light Low Drifting Snow":
+  			case "Heavy Low Drifting Snow":
+  			case "Blowing Snow":
+  			case "Light Blowing Snow":
+  			case "Heavy Blowing Snow":
+  			case "Snow Showers":
+  			case "Light Snow Showers":
+  			case "Heavy Snow Showers":
+  			case "Snow Blowing Snow Mist":
+  			case "Light Snow Blowing Snow Mist":
+  			case "Heavy Snow Blowing Snow Mist":
+  			case "Ice Pellet Showers":
+  			case "Light Ice Pellet Showers":
+  			case "Heavy Ice Pellet Showers":
+  			case "Hail Showers":
+  			case "Light Hail Showers":
+  			case "Heavy Hail Showers":
+  			case "Small Hail Showers":
+  			case "Light Small Hail Showers":
+  			case "Heavy Small Hail Showers":
+  			case "Small Hail":
 				icons.set("condition", Skycons.SNOW);
 				break;
-			case "Fog":
+            case "Fog":
+            case "Light Fog":
+            case "Heavy Fog":
+            case "Fog Patches":
+            case "Light Fog Patches":
+            case "Heavy Fog Patches":
+            case "Haze":
+            case "Light Haze":
+            case "Heavy Haze":
+            case "Mist":
+            case "Light Mist":
+            case "Heavy Mist":
+            case "Freezing Fog":
+            case "Light Freezing Fog":
+            case "Heavy Freezing Fog":
+            case "Patches of Fog":
+            case "Shallow Fog":
+            case "Partial Fog":
 				icons.set("condition", Skycons.FOG);
 				break;
-			case "Thunderstorms":
-				icons.set("condition", Skycons.RAIN);
-				break;
-			case "Thunderstorm":
-				icons.set("condition", Skycons.RAIN);
-				break;
 			case "Overcast":
-				icons.set("condition", Skycons.CLOUDY);
-				break;
 			case "Scattered Clouds":
+            case "Mostly Cloudy":
 				icons.set("condition", Skycons.CLOUDY);
 				break;
-			case "Mostly Cloudy":
-				icons.set("condition", Skycons.CLOUDY);
-				break;
-			case "Mostly Sunny":
-				icons.set("condition", Skycons.CLEAR_DAY);
-				break;
+            case "Cloudy":
 			case "Partly Cloudy":
-				icons.set("condition", Skycons.PARTLY_CLOUDY_DAY);
-				break;
 			case "Partly Sunny":
 				icons.set("condition", Skycons.PARTLY_CLOUDY_DAY);
-				break;
-			case "Freezing Rain":
-				icons.set("condition", Skycons.SLEET);
 				break;
 			default:
 				icons.set("condition", Skycons.CLEAR_DAY);
