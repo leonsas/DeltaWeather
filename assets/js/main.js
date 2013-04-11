@@ -5,8 +5,10 @@
  */
 $(function() {
 
-	// this is using my api key from wunderground
-	var baseURL = 'http://api.wunderground.com/api/da56c81ebb4c6a60';
+		// this is using my api key from wunderground
+	// 394yellow@gmail.com 	def220061728b00b
+	// leonsassonha  da56c81ebb4c6a60
+	var baseURL = 'http://api.wunderground.com/api/def220061728b00b';
 
 	function getGeoLocation() {
 		//check if geolocation is enabled (i.e browser supports it, and users enables it.)
