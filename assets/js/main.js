@@ -36,7 +36,6 @@ $(function() {
 
 				//Lets get the current conditions for this state and city.
 				getCurrentConditions(state, city);
-				getWeather(state, city);
 			}
 		});
 
@@ -59,8 +58,13 @@ $(function() {
 					url : conditionURL,
 					dataType : "jsonp",
 					success : function(data2) {
+						
+						weatherpic = document.getElementById('weatherpic');
 						current = data2.current_observation.temp_f;
 						yesterday = data.history.dailysummary[0].meantempi;
+						
+						changeIcon(data2.current_observation.weather);
+                		
 						test = current - yesterday;
 						test = test.toFixed(0);
 						if (test > 0) {
@@ -75,18 +79,6 @@ $(function() {
 		});
 	};
 
-	function getWeather(state, city) {
-		weatherURL = baseURL + '/conditions/q/' + state + '/' + city + '.json';
-		var weatherpic = document.getElementById('weatherpic');
-		$.ajax({
-			url : weatherURL,
-			dataType : "jsonp",
-			success : function(data) {
-				changeIcon(data.current_observation.weather);
-                weatherpic.innerHTML = data.current_observation.weather;
-			}
-		});
-	};
 
 	function changeIcon(conditions) {
 		var icons = new Skycons();
