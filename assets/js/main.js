@@ -69,9 +69,12 @@ $(function() {
 						test = test.toFixed(0);
 						if (test > 0) {
 							stuff.innerHTML = 'It is ' + test + ' degrees warmer than yesterday.';
-						} else {
+						} else if (test < 0){
 							test *= -1;
 							stuff.innerHTML = 'It is ' + test + ' degrees colder than yesterday.';
+						}
+						else {
+						stuff.innerHTML = 'It is the same temperature as yesterday.';
 						}
 					}
 				});
@@ -87,7 +90,6 @@ $(function() {
             case "Mostly Sunny":
 				icons.set("condition", Skycons.CLEAR_DAY);
 				break;
-			case "Rain":
             case "Drizzle":
             case "Light Drizzle":
             case "Heavy Drizzle":
