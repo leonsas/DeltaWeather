@@ -60,10 +60,18 @@ $(function() {
 					url : conditionURL,
 					dataType : "jsonp",
 					success : function(data2) {
-						
+                       var date = new Date();
+                       var hour = date.getHours();
+                       var j = 0;
+                       var k = 0;
+                       while(j != hour){
+                       j = data.history.observations[k].date.hour;
+                       k++;
+                       }
+                       k--;
 						weatherpic = document.getElementById('weatherpic');
 						current = data2.current_observation.temp_f;
-						yesterday = data.history.dailysummary[0].meantempi;
+						yesterday = data.history.observations[k].tempi;
 						
 						changeIcon(data2.current_observation.weather);
                 		
