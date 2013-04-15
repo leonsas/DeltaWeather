@@ -1,18 +1,29 @@
+<!--https://kuler.adobe.com/#themeID/1084193-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  
+  <!-- <meta charset="utf-8"> -->
+
   <title>&Delta;Weather</title>
+ <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <!-- Bootstrap -->
+  <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="skycons-master/skycons.js"></script>
 <script src="assets/js/main.js"></script>
-<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+<!-- <link rel="stylesheet" type="text/css" href="assets/css/style.css"> -->
 </head>
-<body>
 
-  <h1>&Delta;Weather</h1>
+<body>
+<div id="wrap">
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <h4 class="brand" href="#">Currently feels like: 32</h4>
+  </div>
+</div>
+
 
 <figure class="icons">
 <canvas id="condition" width="128" height="128">
@@ -21,6 +32,19 @@
 
 <h2 id="stuff"></h2>
 
+
+
+<div id ="footer"> 
+  <div class="container">
+    <div class="navbar-inner">
+      <h2 class="brand" href="#">&Delta;Weather</h2>
+    </div>
+  </div>
+</div>
+</div>
+
 </body>
+
+
 
 </html>
