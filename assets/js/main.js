@@ -17,7 +17,8 @@ $(function() {
 	// this is using my api key from wunderground
 	// 394yellow@gmail.com 	def220061728b00b
 	// leonsassonha  da56c81ebb4c6a60
-	var baseURL = 'http://api.wunderground.com/api/def220061728b00b';
+	// fitzcn 52469e66c6aa5600
+	var baseURL = 'http://api.wunderground.com/api/52469e66c6aa5600';
 
 	function getGeoLocation() {
 		//check if geolocation is enabled (i.e browser supports it, and users enables it.)
@@ -79,6 +80,7 @@ $(function() {
 							current_feels_like
 							yesterday = data.history.dailysummary[0].meantempm;
 						} else {
+							current = data2.current_observation.temp_f;
 							feels_like_string = 'Feels like ' + current + '&deg; F';
 							$("#current_feels_like").text(feels_like_string);
 							yesterday = data.history.dailysummary[0].meantempi;

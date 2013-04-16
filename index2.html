@@ -83,10 +83,11 @@
     <!-- Bootstrap -->
   <link href="assets/css/bootstrap.css" rel="stylesheet" media="screen">
 
-<!--<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="assets/js/jquery.cookie.js"></script>
 <script src="skycons-master/skycons.js"></script>
 <script src="assets/js/main.js"></script> -->
-<!-- <link rel="stylesheet" type="text/css" href="assets/css/style.css"> -->
+<!-- <link rel="stylesheet" type="text/css" href="assets/css/style.css">  -->
 </head>
 
 <body>
@@ -96,7 +97,7 @@
 
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
-      <h2 class="brand" href="#">Currently: 32</h2>
+       <h4 class="brand" id="current_feels_like" href="#"></h4>
     </div>
   </div>
 
@@ -117,12 +118,12 @@
 </ul>
 -->
 
- <!-- <figure class="icons">
+ <figure class="icons">
     <canvas id="condition" width="128" height="128">
     </canvas>
   </figure>
 
-  <h2 id="stuff"></h2> -->
+  <h2 id="stuff"></h2> 
 
   </div>
 
@@ -131,6 +132,7 @@
   <div class="footer">
     <div class="navbar-inner">
       <h2 class="brand" href="#">&Delta;Weather</h2>
+       <button id="switch_units">Switch to Celsius</button>
     </div>
   </div>
 
