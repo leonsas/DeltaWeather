@@ -49,21 +49,36 @@ $(function() {
 			hour_string = data.hourly_forecast[i].FCTTIME.civil;
 			feels_like_temp = data.hourly_forecast[i].feelslike.english;
 			delta = feels_like_temp - currtemp;
-			percentage_change = delta * 100 / currtemp;
 
 			deltas.push({
 				hour : hour_string,
 				delta : {
 					magnitude : Math.abs(delta),
 					direction : delta ? delta < 0 ? 'colder' : 'warmer' : 0,
-					percentage_change : percentage_change
+					percentage_change : Math.abs(delta) * 100 / currtemp
 				},
 				
 			});
 
 		}
-		console.log(deltas)
+		return deltas;
 	};
+	
+	function transformBar(data) {
+	for (i = 0; i < 12; i++)
+	{
+		if (data[i].delta.direction == "warmer")
+		{
+			$('.barswrapper').find('.bar-right :eq(' + i + ')').hide();
+			$('.barswrapper').find('.bar-left :eq(' + i + ')').css('width', '' + data[i].delta.percentage_change + '%');
+		}
+		else
+		{
+			$('.barswrapper').find('.bar-left :eq(' + i + ')').hide();
+			$('.barswrapper').find('.bar-right :eq(' + i + ')').css('width', '' + data[i].delta.percentage_change + '%');
+		}
+	}
+	}
 
 	function getCurrentConditions(state, city) {
 
@@ -101,9 +116,11 @@ $(function() {
 								weatherpic = document.getElementById('weatherpic');
 								current = data2.current_observation.temp_f;
 								console.log(data3);
-								getHourlyDeltas(current, data3);
+								deltas = getHourlyDeltas(current, data3);
+								
+								transformBar(deltas);
 								yesterday = data.history.observations[k].tempi;
-
+								/*
 								for (var i = 1; i < 13; i++) {
 									changeIcon(data3.hourly_forecast[i].condition, i);
 								}
@@ -117,6 +134,7 @@ $(function() {
 								} else {
 									stuff.innerHTML = 'It is the same temperature as yesterday.';
 								}
+								*/
 							}
 						});
 					}
