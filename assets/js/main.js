@@ -5,10 +5,8 @@
  */
 $(function() {
 
-		// this is using my api key from wunderground
-	// 394yellow@gmail.com 	def220061728b00b
-	// leonsassonha  da56c81ebb4c6a60
-	var baseURL = 'http://api.wunderground.com/api/def220061728b00b';
+	// this is using my api key from wunderground
+	var baseURL = 'http://api.wunderground.com/api/1d0606d6ee23da9e';
 
 	function getGeoLocation() {
 		//check if geolocation is enabled (i.e browser supports it, and users enables it.)
@@ -48,6 +46,7 @@ $(function() {
 		//new URL
 		conditionURL = baseURL + '/conditions/q/' + state + '/' + city + '.json';
 		yesterdayURL = baseURL + '/yesterday/q/' + state + '/' + city + '.json';
+        hourlyURL    = baseURL + '/hourly/q/' + state + '/' + city + '.json';
 		var stuff = document.getElementById('stuff');
 
 		//now query wunderground for current conditions for the city/state, and display 		the Feels Like temp.
@@ -60,32 +59,39 @@ $(function() {
 					url : conditionURL,
 					dataType : "jsonp",
 					success : function(data2) {
-                       var date = new Date();
-                       var hour = date.getHours();
-                       var j = 0;
-                       var k = 0;
-                       while(j != hour){
-                       j = data.history.observations[k].date.hour;
-                       k++;
-                       }
-                       k--;
-						weatherpic = document.getElementById('weatherpic');
-						current = data2.current_observation.temp_f;
-						yesterday = data.history.observations[k].tempi;
-						
-						changeIcon(data2.current_observation.weather);
-                		
-						test = current - yesterday;
-						test = test.toFixed(0);
-						if (test > 0) {
-							stuff.innerHTML = 'It is ' + test + ' degrees warmer than yesterday.';
-						} else if (test < 0){
-							test *= -1;
-							stuff.innerHTML = 'It is ' + test + ' degrees colder than yesterday.';
-						}
-						else {
-						stuff.innerHTML = 'It is the same temperature as yesterday.';
-						}
+                       $.ajax({
+                              url : hourlyURL,
+                              dataType : "jsonp",
+                              success : function(data3) {
+                              var date = new Date();
+                              var hour = date.getHours();
+                              var j = 0;
+                              var k = 0;
+                              while(j != hour){
+                              j = data.history.observations[k].date.hour;
+                              k++;
+                              }
+                              k--;
+                              weatherpic = document.getElementById('weatherpic');
+                              current = data2.current_observation.temp_f;
+                              yesterday = data.history.observations[k].tempi;
+                              
+                              for(var i=1;i<13;i++){
+                                changeIcon(data3.hourly_forecast[i].condition,i);
+                              }
+                                test = current - yesterday;
+                                test = test.toFixed(0);
+                                if (test > 0) {
+                                    stuff.innerHTML = 'It is ' + test + ' degrees warmer than yesterday.';
+                                } else if (test < 0){
+                                    test *= -1;
+                                    stuff.innerHTML = 'It is ' + test + ' degrees colder than yesterday.';
+                                }
+                                else {
+                                stuff.innerHTML = 'It is the same temperature as yesterday.';
+                                }
+                              }
+                              });
 					}
 				});
 			}
@@ -93,12 +99,51 @@ $(function() {
 	};
 
 
-	function changeIcon(conditions) {
+	function changeIcon(conditions,index) {
 		var icons = new Skycons();
+        var cond = "";
+        switch(index){
+            case 1:
+                cond= "condition";
+                break;
+            case 2:
+                cond= "condition2";
+                break;
+            case 3:
+                cond= "condition3";
+                break;
+            case 4:
+                cond= "condition4";
+                break;
+            case 5:
+                cond= "condition5";
+                break;
+            case 6:
+                cond= "condition6";
+                break;
+            case 7:
+                cond= "condition7";
+                break;
+            case 8:
+                cond= "condition8";
+                break;
+            case 9:
+                cond= "condition9";
+                break;
+            case 10:
+                cond= "condition10";
+                break;
+            case 11:
+                cond= "condition11";
+                break;
+            case 12:
+                cond= "condition12";
+                break;
+        }
 		switch(conditions) {
 			case "Clear":
             case "Mostly Sunny":
-				icons.set("condition", Skycons.CLEAR_DAY);
+				icons.set(cond, Skycons.CLEAR_DAY);
 				break;
             case "Drizzle":
             case "Light Drizzle":
@@ -137,10 +182,10 @@ $(function() {
             case "Freezing Rain":
             case "Light Freezing Rain":
             case "Heavy Freezing Rain":
-				icons.set("condition", Skycons.RAIN);
+				icons.set(cond, Skycons.RAIN);
 				break;
 			case "Sleet":
-				icons.set("condition", Skycons.SLEET);
+				icons.set(cond, Skycons.SLEET);
 				break;
 			case "Snow":
   			case "Light Snow":
@@ -179,7 +224,7 @@ $(function() {
   			case "Light Small Hail Showers":
   			case "Heavy Small Hail Showers":
   			case "Small Hail":
-				icons.set("condition", Skycons.SNOW);
+				icons.set(cond, Skycons.SNOW);
 				break;
             case "Fog":
             case "Light Fog":
@@ -199,20 +244,20 @@ $(function() {
             case "Patches of Fog":
             case "Shallow Fog":
             case "Partial Fog":
-				icons.set("condition", Skycons.FOG);
+				icons.set(cond, Skycons.FOG);
 				break;
 			case "Overcast":
 			case "Scattered Clouds":
             case "Mostly Cloudy":
-				icons.set("condition", Skycons.CLOUDY);
+                icons.set(cond, Skycons.CLOUDY)
 				break;
             case "Cloudy":
 			case "Partly Cloudy":
 			case "Partly Sunny":
-				icons.set("condition", Skycons.PARTLY_CLOUDY_DAY);
+				icons.set(cond, Skycons.PARTLY_CLOUDY_DAY);
 				break;
 			default:
-				icons.set("condition", Skycons.CLEAR_DAY);
+				icons.set(cond, Skycons.CLEAR_DAY);
 				break;
 		}
 		icons.play();

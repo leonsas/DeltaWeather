@@ -45,5 +45,58 @@ body {
                      0px 13px 15px rgba(100, 100, 100, 0.3);
     }
     figure {
-	text-align: center;
+        transform: scale(0.5,0.5);
+        -ms-transform:scale(0.5,0.5); /* IE 9 */
+        -webkit-transform:scale(0.5,0.5); /* Safari and Chrome */
+    }
+    canvas {
+        position: absolute;
+    }
+    canvas.p1 {
+        top: 0px;
+        left: 500px;
+    }
+    canvas.p2 {
+        top: 67px;
+        left: 750px;
+    }
+    canvas.p3 {
+        top: 250px;
+        left: 933px;
+    }
+    canvas.p4 {
+        top: 500px;
+        left: 1000px;
+    }
+    canvas.p5 {
+        top: 750px;
+        left: 933px;
+    }
+    canvas.p6 {
+        top: 933px;
+        left: 750px;
+    }
+    canvas.p7 {
+        top: 1000px;
+        left: 500px;
+    }
+    canvas.p8 {
+        top: 933px;
+        left: 250px;
+    }
+    canvas.p9 {
+        top: 750px;
+        left: 67px;
+    }
+    canvas.p10 {
+        top: 500px;
+        left: 0px;
+    }
+    canvas.p11 {
+        top: 250px;
+        left: 67px;
+    }
+    canvas.p12 {
+        top: 67px;
+        left: 250px;
     }
