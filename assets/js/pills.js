@@ -4,21 +4,9 @@
  *
  */
 $(function() {
-	
-	function switchUnitsButtonTextUpdate(){
-		
-		current_unit = $.cookie('unit');
-		if (current_unit == 'celsius') {
-			$("#switch_units").text("Switch to Fahrenheit");
-		} else {
-			$("#switch_units").text("Switch to Celsius");
-		}
-	}
+
 	// this is using my api key from wunderground
-	// 394yellow@gmail.com 	def220061728b00b
-	// leonsassonha  da56c81ebb4c6a60
-	// fitzcn 52469e66c6aa5600
-	var baseURL = 'http://api.wunderground.com/api/52469e66c6aa5600';
+	var baseURL = 'http://api.wunderground.com/api/1d0606d6ee23da9e';
 
 	function getGeoLocation() {
 		//check if geolocation is enabled (i.e browser supports it, and users enables it.)
@@ -53,13 +41,57 @@ $(function() {
 
 	};
 
+	function getHourlyDeltas(currtemp, data) {
+
+		deltas = [];
+		for ( i = 0; i < 12; i++) {
+
+			hour_string = data.hourly_forecast[i].FCTTIME.civil;
+			feels_like_temp = data.hourly_forecast[i].feelslike.english;
+			icon_url = data.hourly_forecast[i].icon_url
+			
+			delta = feels_like_temp - currtemp;
+
+			deltas.push({
+				hour : hour_string,
+				feels_like : feels_like_temp,
+				icon_url : icon_url,
+				delta : {
+					magnitude : Math.abs(delta),
+					direction : delta ? delta < 0 ? 'colder' : 'warmer' : 0,
+					percentage_change : Math.abs(delta) * 100 / currtemp
+				},
+
+			});
+
+		}
+		return deltas;
+	};
+
+	function transformBar(data) {
+		
+		num_bars=12
+		for ( i = 0; i < num_bars; i++) {
+			$('.barswrapper').find('.curr_temp').eq(i).text(data[i].feels_like);
+			$('.barswrapper').find('.condition_img').eq(i).attr("src",data[i].icon_url);
+			$('.barswrapper').find('.time').eq(i).text(data[i].hour);
+			if (data[i].delta.direction == "warmer") {
+				$('.barswrapper').find('.bar-right').eq(i).hide();
+				$('.barswrapper').find('.bar-left').eq(i).css('width', '' + data[i].delta.percentage_change + '%');
+			} else {
+				$('.barswrapper').find('.bar-left').eq(i).hide();
+				$('.barswrapper').find('.bar-right').eq(i).css('width', '' + data[i].delta.percentage_change + '%');
+			}
+		}
+	}
+
 	function getCurrentConditions(state, city) {
 
 		//new URL
 		conditionURL = baseURL + '/conditions/q/' + state + '/' + city + '.json';
 		yesterdayURL = baseURL + '/yesterday/q/' + state + '/' + city + '.json';
-		var delta_string = document.getElementById('delta_string');
-		var currentlyfeelhtml = document.getElementById("current_feels_like");
+		hourlyURL = baseURL + '/hourly/q/' + state + '/' + city + '.json';
+		var stuff = document.getElementById('stuff');
 
 		//now query wunderground for current conditions for the city/state, and display 		the Feels Like temp.
 		$.ajax({
@@ -71,60 +103,96 @@ $(function() {
 					url : conditionURL,
 					dataType : "jsonp",
 					success : function(data2) {
-						/*
-                       var date = new Date();
-                       var hour = date.getHours();
-                       var j = 0;
-                       var k = 0;
-                       while(j != hour){
-                       j = data.history.observations[k].date.hour;
-                       k++;
-                       }
-                       k--;
-						weatherpic = document.getElementById('weatherpic');
-						current = data2.current_observation.temp_f;
-						yesterday = data.history.observations[k].tempi;
-						*/
+						$.ajax({
+							url : hourlyURL,
+							dataType : "jsonp",
+							success : function(data3) {
+								var date = new Date();
+								var hour = date.getHours();
+								var j = 0;
+								var k = 0;
+								console.log(data);
 
+								while (j != hour) {
+									j = data.history.observations[k].date.hour;
+									k++;
+								}
+								k--;
+								weatherpic = document.getElementById('weatherpic');
+								current = data2.current_observation.temp_f;
+								console.log(data3);
+								deltas = getHourlyDeltas(current, data3);
 
-						weatherpic = document.getElementById('weatherpic');
-						desired_unit = $.cookie('unit');
-						if (desired_unit == 'celsius') {
-							current = data2.current_observation.temp_c;
-							current_feels_like.innerHTML = 'Feels like ' + current + '&#176; C';
-							yesterday = data.history.dailysummary[0].meantempm;
-						} else {
-							current = data2.current_observation.temp_f;
-							current_feels_like.innerHTML = 'Feels like ' + current + '&#176; F';
-							yesterday = data.history.dailysummary[0].meantempi;
-						}
-
-						
-						console.log(data)
-						changeIcon(data2.current_observation.weather);
-
-						test = current - yesterday;
-						test = test.toFixed(0);
-						if (test > 0) {
-							delta_string.innerHTML = '&uarr;' + test + '&deg; from yesterday';
-						} else if (test < 0) {
-							test *= -1;
-							delta_string.innerHTML = '&darr;' + test + '&deg; from yesterday';
-						} else {
-							delta_string.innerHTML = 'It is the same temperature as yesterday.';
-						}
+								transformBar(deltas);
+								yesterday = data.history.observations[k].tempi;
+								/*
+								 for (var i = 1; i < 13; i++) {
+								 changeIcon(data3.hourly_forecast[i].condition, i);
+								 }
+								 test = current - yesterday;
+								 test = test.toFixed(0);
+								 if (test > 0) {
+								 stuff.innerHTML = 'It is ' + test + ' degrees warmer than yesterday.';
+								 } else if (test < 0) {
+								 test *= -1;
+								 stuff.innerHTML = 'It is ' + test + ' degrees colder than yesterday.';
+								 } else {
+								 stuff.innerHTML = 'It is the same temperature as yesterday.';
+								 }
+								 */
+							}
+						});
 					}
 				});
 			}
 		});
 	};
 
-	function changeIcon(conditions) {
+	function changeIcon(conditions, index) {
 		var icons = new Skycons();
+		var cond = "";
+		switch(index) {
+			case 1:
+				cond = "condition";
+				break;
+			case 2:
+				cond = "condition2";
+				break;
+			case 3:
+				cond = "condition3";
+				break;
+			case 4:
+				cond = "condition4";
+				break;
+			case 5:
+				cond = "condition5";
+				break;
+			case 6:
+				cond = "condition6";
+				break;
+			case 7:
+				cond = "condition7";
+				break;
+			case 8:
+				cond = "condition8";
+				break;
+			case 9:
+				cond = "condition9";
+				break;
+			case 10:
+				cond = "condition10";
+				break;
+			case 11:
+				cond = "condition11";
+				break;
+			case 12:
+				cond = "condition12";
+				break;
+		}
 		switch(conditions) {
 			case "Clear":
 			case "Mostly Sunny":
-				icons.set("condition", Skycons.CLEAR_DAY);
+				icons.set(cond, Skycons.CLEAR_DAY);
 				break;
 			case "Drizzle":
 			case "Light Drizzle":
@@ -163,10 +231,10 @@ $(function() {
 			case "Freezing Rain":
 			case "Light Freezing Rain":
 			case "Heavy Freezing Rain":
-				icons.set("condition", Skycons.RAIN);
+				icons.set(cond, Skycons.RAIN);
 				break;
 			case "Sleet":
-				icons.set("condition", Skycons.SLEET);
+				icons.set(cond, Skycons.SLEET);
 				break;
 			case "Snow":
 			case "Light Snow":
@@ -205,7 +273,7 @@ $(function() {
 			case "Light Small Hail Showers":
 			case "Heavy Small Hail Showers":
 			case "Small Hail":
-				icons.set("condition", Skycons.SNOW);
+				icons.set(cond, Skycons.SNOW);
 				break;
 			case "Fog":
 			case "Light Fog":
@@ -225,37 +293,24 @@ $(function() {
 			case "Patches of Fog":
 			case "Shallow Fog":
 			case "Partial Fog":
-				icons.set("condition", Skycons.FOG);
+				icons.set(cond, Skycons.FOG);
 				break;
 			case "Overcast":
 			case "Scattered Clouds":
 			case "Mostly Cloudy":
-				icons.set("condition", Skycons.CLOUDY);
+				icons.set(cond, Skycons.CLOUDY)
 				break;
 			case "Cloudy":
 			case "Partly Cloudy":
 			case "Partly Sunny":
-				icons.set("condition", Skycons.PARTLY_CLOUDY_DAY);
+				icons.set(cond, Skycons.PARTLY_CLOUDY_DAY);
 				break;
 			default:
-				icons.set("condition", Skycons.CLEAR_DAY);
+				icons.set(cond, Skycons.CLEAR_DAY);
 				break;
 		}
 		icons.play();
 	};
 
-	$("#switch_units").click(function() {
-
-		current_unit = $.cookie('unit');
-		if (current_unit == 'celsius') {
-			$.cookie('unit', 'fahrenheit', {expires : 7});
-		} else {
-			$.cookie('unit', 'celsius', {expires : 7});
-		}
-		
-		window.location.reload(); //force reload to make the changes appear
-	});
-
 	getGeoLocation();
-	switchUnitsButtonTextUpdate();
 });
