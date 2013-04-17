@@ -59,6 +59,7 @@ $(function() {
 		conditionURL = baseURL + '/conditions/q/' + state + '/' + city + '.json';
 		yesterdayURL = baseURL + '/yesterday/q/' + state + '/' + city + '.json';
 		var stuff = document.getElementById('stuff');
+		var currentlyfeelhtml = document.getElementById("current_feels_like");
 
 		//now query wunderground for current conditions for the city/state, and display 		the Feels Like temp.
 		$.ajax({
@@ -75,14 +76,11 @@ $(function() {
 						desired_unit = $.cookie('unit');
 						if (desired_unit == 'celsius') {
 							current = data2.current_observation.temp_c;
-							feels_like_string = 'Feels like ' + current + '&deg; C';
-							$("#current_feels_like").text(feels_like_string);
-							current_feels_like
+							current_feels_like.innerHTML = 'Feels like ' + current + '&#176; C';
 							yesterday = data.history.dailysummary[0].meantempm;
 						} else {
 							current = data2.current_observation.temp_f;
-							feels_like_string = 'Feels like ' + current + '&deg; F';
-							$("#current_feels_like").text(feels_like_string);
+							current_feels_like.innerHTML = 'Feels like ' + current + '&#176; F';
 							yesterday = data.history.dailysummary[0].meantempi;
 						}
 
