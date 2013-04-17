@@ -86,7 +86,7 @@ $(function() {
 						yesterday = data.history.observations[k].tempi;
 						*/
 
-
+						console.log(data2)
 						weatherpic = document.getElementById('weatherpic');
 						desired_unit = $.cookie('unit');
 						if (desired_unit == 'celsius') {
@@ -100,8 +100,8 @@ $(function() {
 						}
 
 						
-						console.log(data)
-						changeIcon(data2.current_observation.weather);
+						$('#condition_img').attr('src',data2.current_observation.icon_url);
+						//changeIcon(data2.current_observation.weather);
 
 						test = current - yesterday;
 						test = test.toFixed(0);
