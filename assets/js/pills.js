@@ -73,7 +73,8 @@ $(function() {
 		num_bars=12
 		for ( i = 0; i < num_bars; i++) {
 			$('.barswrapper').find('.curr_temp').eq(i).text(data[i].feels_like);
-			$('.barswrapper').find('.condition_img').eq(i).attr("src",data[i].icon_url)
+			$('.barswrapper').find('.condition_img').eq(i).attr("src",data[i].icon_url);
+			$('.barswrapper').find('.time').eq(i).text(data[i].hour);
 			if (data[i].delta.direction == "warmer") {
 				$('.barswrapper').find('.bar-right').eq(i).hide();
 				$('.barswrapper').find('.bar-left').eq(i).css('width', '' + data[i].delta.percentage_change + '%');
