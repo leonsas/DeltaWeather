@@ -48,36 +48,40 @@ $(function() {
 
 			hour_string = data.hourly_forecast[i].FCTTIME.civil;
 			feels_like_temp = data.hourly_forecast[i].feelslike.english;
+			icon_url = data.hourly_forecast[i].icon_url
+			
 			delta = feels_like_temp - currtemp;
 
 			deltas.push({
 				hour : hour_string,
+				feels_like : feels_like_temp,
+				icon_url : icon_url,
 				delta : {
 					magnitude : Math.abs(delta),
 					direction : delta ? delta < 0 ? 'colder' : 'warmer' : 0,
 					percentage_change : Math.abs(delta) * 100 / currtemp
 				},
-				
+
 			});
 
 		}
 		return deltas;
 	};
-	
+
 	function transformBar(data) {
-	for (i = 0; i < 12; i++)
-	{
-		if (data[i].delta.direction == "warmer")
-		{
-			$('.barswrapper').find('.bar-right :eq(' + i + ')').hide();
-			$('.barswrapper').find('.bar-left :eq(' + i + ')').css('width', '' + data[i].delta.percentage_change + '%');
+		
+		num_bars=12
+		for ( i = 0; i < num_bars; i++) {
+			$('.barswrapper').find('.curr_temp').eq(i).text(data[i].feels_like);
+			$('.barswrapper').find('.condition_img').eq(i).attr("src",data[i].icon_url)
+			if (data[i].delta.direction == "warmer") {
+				$('.barswrapper').find('.bar-right').eq(i).hide();
+				$('.barswrapper').find('.bar-left').eq(i).css('width', '' + data[i].delta.percentage_change + '%');
+			} else {
+				$('.barswrapper').find('.bar-left').eq(i).hide();
+				$('.barswrapper').find('.bar-right').eq(i).css('width', '' + data[i].delta.percentage_change + '%');
+			}
 		}
-		else
-		{
-			$('.barswrapper').find('.bar-left :eq(' + i + ')').hide();
-			$('.barswrapper').find('.bar-right :eq(' + i + ')').css('width', '' + data[i].delta.percentage_change + '%');
-		}
-	}
 	}
 
 	function getCurrentConditions(state, city) {
@@ -117,24 +121,24 @@ $(function() {
 								current = data2.current_observation.temp_f;
 								console.log(data3);
 								deltas = getHourlyDeltas(current, data3);
-								
+
 								transformBar(deltas);
 								yesterday = data.history.observations[k].tempi;
 								/*
-								for (var i = 1; i < 13; i++) {
-									changeIcon(data3.hourly_forecast[i].condition, i);
-								}
-								test = current - yesterday;
-								test = test.toFixed(0);
-								if (test > 0) {
-									stuff.innerHTML = 'It is ' + test + ' degrees warmer than yesterday.';
-								} else if (test < 0) {
-									test *= -1;
-									stuff.innerHTML = 'It is ' + test + ' degrees colder than yesterday.';
-								} else {
-									stuff.innerHTML = 'It is the same temperature as yesterday.';
-								}
-								*/
+								 for (var i = 1; i < 13; i++) {
+								 changeIcon(data3.hourly_forecast[i].condition, i);
+								 }
+								 test = current - yesterday;
+								 test = test.toFixed(0);
+								 if (test > 0) {
+								 stuff.innerHTML = 'It is ' + test + ' degrees warmer than yesterday.';
+								 } else if (test < 0) {
+								 test *= -1;
+								 stuff.innerHTML = 'It is ' + test + ' degrees colder than yesterday.';
+								 } else {
+								 stuff.innerHTML = 'It is the same temperature as yesterday.';
+								 }
+								 */
 							}
 						});
 					}
