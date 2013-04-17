@@ -58,7 +58,7 @@ $(function() {
 		//new URL
 		conditionURL = baseURL + '/conditions/q/' + state + '/' + city + '.json';
 		yesterdayURL = baseURL + '/yesterday/q/' + state + '/' + city + '.json';
-		var stuff = document.getElementById('stuff');
+		var delta_string = document.getElementById('delta_string');
 		var currentlyfeelhtml = document.getElementById("current_feels_like");
 
 		//now query wunderground for current conditions for the city/state, and display 		the Feels Like temp.
@@ -91,12 +91,12 @@ $(function() {
 						test = current - yesterday;
 						test = test.toFixed(0);
 						if (test > 0) {
-							stuff.innerHTML = '&uarr;' + test + '&deg; from yesterday';
+							delta_string.innerHTML = '&uarr;' + test + '&deg; from yesterday';
 						} else if (test < 0) {
 							test *= -1;
-							stuff.innerHTML = '&darr;' + test + '&deg; from yesterday';
+							delta_string.innerHTML = '&darr;' + test + '&deg; from yesterday';
 						} else {
-							stuff.innerHTML = 'It is the same temperature as yesterday.';
+							delta_string.innerHTML = 'It is the same temperature as yesterday.';
 						}
 					}
 				});
