@@ -18,7 +18,8 @@ $(function() {
 	// 394yellow@gmail.com 	def220061728b00b
 	// leonsassonha  da56c81ebb4c6a60
 	// fitzcn 52469e66c6aa5600
-	var baseURL = 'http://api.wunderground.com/api/52469e66c6aa5600';
+    // grossbill6 1d0606d6ee23da9e
+	var baseURL = 'http://api.wunderground.com/api/1d0606d6ee23da9e';
 
 	function getGeoLocation() {
 		//check if geolocation is enabled (i.e browser supports it, and users enables it.)
