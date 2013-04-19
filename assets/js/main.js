@@ -46,7 +46,7 @@ $(function() {
 			success : function(data) {
 				state = data.location.state;
 				city = data.location.city;
-
+				$('#current_location').text(city)
 				//Lets get the current conditions for this state and city.
 				getCurrentConditions(state, city);
 			}
