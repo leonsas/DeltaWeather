@@ -66,9 +66,10 @@ $(function() {
 			url : conditionURL,
 			dataType : "jsonp",
 			success : function(data) {
-						/*
+						
                        var date = new Date();
                        var hour = date.getHours();
+                       /*
                        var j = 0;
                        var k = 0;
                        while(j != hour){
@@ -80,7 +81,13 @@ $(function() {
 						current = data.current_observation.temp_f;
 						yesterday = data.history.observations[k].tempi;
 						*/
-
+               var sunrise = data.moon_phase.sunrise.hour;
+               var sunset = data.moon_phase.sunset.hour;
+               var check = 1;
+               if(hour<sunrise || hour>sunset){
+               check = 0;
+               }
+               
 
 						weatherpic = document.getElementById('weatherpic');
 						desired_unit = $.cookie('unit');
@@ -96,7 +103,7 @@ $(function() {
                         
 						
 						console.log(data)
-						changeIcon(data.current_observation.weather);
+						changeIcon(data.current_observation.weather,check);
 
 						test = current - yesterday;
 						test = test.toFixed(0);
@@ -112,12 +119,15 @@ $(function() {
 		});
 	};
 
-	function changeIcon(conditions) {
+	function changeIcon(conditions,index) {
 		var icons = new Skycons();
 		switch(conditions) {
 			case "Clear":
 			case "Mostly Sunny":
-				icons.set("condition", Skycons.CLEAR_DAY);
+                if(index){
+                    icons.set("condition", Skycons.CLEAR_DAY);}
+                else{
+                    icons.set("condition", Skycons.CLEAR_NIGHT);}
 				break;
 			case "Drizzle":
 			case "Light Drizzle":
@@ -228,12 +238,18 @@ $(function() {
 			case "Cloudy":
 			case "Partly Cloudy":
 			case "Partly Sunny":
-				icons.set("condition", Skycons.PARTLY_CLOUDY_DAY);
+                if(index){
+                    icons.set("condition", Skycons.PARTLY_CLOUDY_DAY);}
+                else{
+                    icons.set("condition", Skycons.PARTLY_CLOUDY_NIGHT);}
 				break;
 			default:
-				icons.set("condition", Skycons.CLEAR_DAY);
-				break;
-		}
+                if(index){
+                    icons.set("condition", Skycons.CLEAR_DAY);}
+                else{
+                    icons.set("condition", Skycons.CLEAR_NIGHT);}
+                break;
+            }
 		icons.play();
 	};
 
