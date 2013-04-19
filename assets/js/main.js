@@ -57,21 +57,15 @@ $(function() {
 	function getCurrentConditions(state, city) {
 
 		//new URL
-		conditionURL = baseURL + '/conditions/q/' + state + '/' + city + '.json';
-		yesterdayURL = baseURL + '/yesterday/q/' + state + '/' + city + '.json';
+		conditionURL = baseURL + '/conditions/yesterday/astronomy/q/' + state + '/' + city + '.json';
 		var delta_string = document.getElementById('delta_string');
 		var currentlyfeelhtml = document.getElementById("current_feels_like");
 
 		//now query wunderground for current conditions for the city/state, and display 		the Feels Like temp.
 		$.ajax({
-			url : yesterdayURL,
+			url : conditionURL,
 			dataType : "jsonp",
 			success : function(data) {
-
-				$.ajax({
-					url : conditionURL,
-					dataType : "jsonp",
-					success : function(data2) {
 						/*
                        var date = new Date();
                        var hour = date.getHours();
@@ -83,7 +77,7 @@ $(function() {
                        }
                        k--;
 						weatherpic = document.getElementById('weatherpic');
-						current = data2.current_observation.temp_f;
+						current = data.current_observation.temp_f;
 						yesterday = data.history.observations[k].tempi;
 						*/
 
@@ -91,18 +85,18 @@ $(function() {
 						weatherpic = document.getElementById('weatherpic');
 						desired_unit = $.cookie('unit');
 						if (desired_unit == 'celsius') {
-							current = data2.current_observation.temp_c;
+							current = data.current_observation.temp_c;
 							current_feels_like.innerHTML = 'Feels like ' + current + '&#176; C';
 							yesterday = data.history.dailysummary[0].meantempm;
 						} else {
-							current = data2.current_observation.temp_f;
+							current = data.current_observation.temp_f;
 							current_feels_like.innerHTML = 'Feels like ' + current + '&#176; F';
 							yesterday = data.history.dailysummary[0].meantempi;
 						}
-
+                        
 						
 						console.log(data)
-						changeIcon(data2.current_observation.weather);
+						changeIcon(data.current_observation.weather);
 
 						test = current - yesterday;
 						test = test.toFixed(0);
@@ -114,8 +108,6 @@ $(function() {
 						} else {
 							delta_string.innerHTML = 'It is the same temperature as yesterday.';
 						}
-					}
-				});
 			}
 		});
 	};
