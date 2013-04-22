@@ -8,8 +8,8 @@
 		<title>Hourly Deltas</title>
 		<!-- Bootstrap -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="assets/css/bootstrap.css" rel="stylesheet">
-		<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+		<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+		<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script src="assets/js/jquery.cookie.js"></script>
 		<script src="skycons-master/skycons.js"></script>
@@ -18,10 +18,17 @@
 	</head>
 
 	<body>
+
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+       <h4 class="brand" id="current_feels_like" href="#"></h4>
+       <h5 class="brand" id="current_location"></h5>
+    </div>
+  </div>
+
+
 		<div class="barswrapper">
 
-	
-			<a href="/index.html">Home</a>
 			<div class="row-fluid">
 				<div class="span5">
 					<div class="progress">
@@ -227,6 +234,22 @@
 				</div>
 			</div>
 		</div>
+
+  <div class="navbar navbar-fixed-bottom">
+  <div class="navbar-inner">
+    <ul class="nav">
+      <li><a href="index.html"><img src="assets/img/home.svg" alt="home icon for homepage" style="width: auto; height: auto;"></a></li>
+      <li class="active"><a href="hourly.html"><img src="assets/img/hourly.svg" alt="clock icon for hourly weather"></a></li>
+      <li><a href="accessories.html"><img src="assets/img/umbrella.svg" alt="umbrella icon for accessories page"></a></li>
+    </ul>
+  </div>
+</div>
+
+
+
+
+
+
 	</body>
 
 </html>
