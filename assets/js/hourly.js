@@ -6,7 +6,8 @@
 $(function() {
 
 	// this is using my api key from wunderground
-	var baseURL = 'http://api.wunderground.com/api/1d0606d6ee23da9e';
+	//var baseURL = 'http://api.wunderground.com/api/1d0606d6ee23da9e';
+	var baseURL = 'https://api.forecast.io/forecast/fc590758007d8f0eb51877e6883ffda1/';
 
 	function getGeoLocation() {
 		//check if geolocation is enabled (i.e browser supports it, and users enables it.)
@@ -24,10 +25,10 @@ $(function() {
 
 	function getCityLocation(latitude, longitude) {
 		//new URL that does a geolookup to get a city name from lat/lon
-		queryURL = baseURL + '/geolookup/q/' + latitude + ',' + longitude + '.json';
+		//queryURL = baseURL + '/geolookup/q/' + latitude + ',' + longitude + '.json';
 
 		//GET call that returns the geolookup info
-		$.ajax({
+		/*$.ajax({
 			url : queryURL,
 			dataType : "jsonp",
 			success : function(data) {
@@ -38,63 +39,29 @@ $(function() {
 				getCurrentConditions(state, city);
 			}
 		});
-
-	};
-
-	function getHourlyDeltas(currtemp, data) {
-
-		deltas = [];
-		for ( i = 0; i < 12; i++) {
-
-			hour_string = data.hourly_forecast[i].FCTTIME.civil;
-			feels_like_temp = data.hourly_forecast[i].feelslike.english;
-			icon_url = data.hourly_forecast[i].icon_url
-			
-			delta = feels_like_temp - currtemp;
-
-			deltas.push({
-				hour : hour_string,
-				feels_like : feels_like_temp,
-				icon_url : icon_url,
-				delta : {
-					magnitude : Math.abs(delta),
-					direction : delta ? delta < 0 ? 'colder' : 'warmer' : 0,
-					percentage_change : Math.abs(delta) * 100 / currtemp
-				},
-
-			});
-
-		}
-		return deltas;
-	};
-
-	function transformBar(data) {
-		
-		num_bars=12
-		for ( i = 0; i < num_bars; i++) {
-			$('.barswrapper').find('.curr_temp').eq(i).text(data[i].feels_like);
-			$('.barswrapper').find('.condition_img').eq(i).attr("src",data[i].icon_url);
-			$('.barswrapper').find('.time').eq(i).text(data[i].hour);
-			if (data[i].delta.direction == "warmer") {
-				$('.barswrapper').find('.bar-right').eq(i).hide();
-				$('.barswrapper').find('.bar-left').eq(i).css('width', '' + data[i].delta.percentage_change + '%');
-			} else {
-				$('.barswrapper').find('.bar-left').eq(i).hide();
-				$('.barswrapper').find('.bar-right').eq(i).css('width', '' + data[i].delta.percentage_change + '%');
-			}
-		}
-	}
-
-	function getCurrentConditions(state, city) {
-
 		//new URL
 		conditionURL = baseURL + '/conditions/q/' + state + '/' + city + '.json';
 		yesterdayURL = baseURL + '/yesterday/q/' + state + '/' + city + '.json';
-		hourlyURL = baseURL + '/hourly/q/' + state + '/' + city + '.json';
-		var stuff = document.getElementById('stuff');
-
-		//now query wunderground for current conditions for the city/state, and display 		the Feels Like temp.
+		hourlyURL = baseURL + '/hourly/q/' + state + '/' + city + '.json';*/
+		desired_unit = $.cookie('unit');
+		if (desired_unit == 'celsius')
+		{
+		queryURL = baseURL + latitude + ',' + longitude + '?exclude=currently,minutely,daily,alerts,flags&units=si.jsonp';
+		}
+		else
+		{
+		queryURL = baseURL + latitude + ',' + longitude + '?exclude=currently,minutely,daily,alerts,flags.jsonp';
+		}
 		$.ajax({
+			url: queryURL,
+			dataType : "jsonp",
+			success : function(data) {
+				deltas = getHourlyDeltas(data);
+				transformBar(deltas);
+				}
+			});
+		//now query wunderground for current conditions for the city/state, and display 		the Feels Like temp.
+		/*$.ajax({
 			url : yesterdayURL,
 			dataType : "jsonp",
 			success : function(data) {
@@ -125,28 +92,79 @@ $(function() {
 
 								transformBar(deltas);
 								yesterday = data.history.observations[k].tempi;
-								/*
-								 for (var i = 1; i < 13; i++) {
-								 changeIcon(data3.hourly_forecast[i].condition, i);
-								 }
-								 test = current - yesterday;
-								 test = test.toFixed(0);
-								 if (test > 0) {
-								 stuff.innerHTML = 'It is ' + test + ' degrees warmer than yesterday.';
-								 } else if (test < 0) {
-								 test *= -1;
-								 stuff.innerHTML = 'It is ' + test + ' degrees colder than yesterday.';
-								 } else {
-								 stuff.innerHTML = 'It is the same temperature as yesterday.';
-								 }
-								 */
 							}
 						});
 					}
 				});
 			}
-		});
+		});*/
 	};
+
+	/*function getHourlyDeltas(currtemp, data) {
+
+		deltas = [];
+		for ( i = 0; i < 12; i++) {
+
+			hour_string = data.hourly_forecast[i].FCTTIME.civil;
+			feels_like_temp = data.hourly_forecast[i].feelslike.english;
+			icon_url = data.hourly_forecast[i].icon_url
+			
+			delta = feels_like_temp - currtemp;
+
+			deltas.push({
+				hour : hour_string,
+				feels_like : feels_like_temp,
+				icon_url : icon_url,
+				delta : {
+					magnitude : Math.abs(delta),
+					direction : delta ? delta < 0 ? 'colder' : 'warmer' : 0,
+					percentage_change : Math.abs(delta) * 100 / currtemp
+				},
+
+			});
+
+		}
+		return deltas;
+	};*/
+	
+	function getHourlyDeltas(data) {
+		deltas = [];
+		for (i = 1; i < 13; i++)
+		{
+		currtemp = data.hourly.data[0].temperature;
+		feels_like_temp = data.hourly.data[i].temperature;
+		delta = feels_like_temp - currtemp;
+		deltas.push({
+			//hour : hour_string,
+			feels_like : feels_like_temp,
+			delta : {
+				magnitude : Math.abs(delta),
+				direction : delta ? delta < 0 ? 'colder' : 'warmer' : 0,
+				percentage_change : Math.abs(delta) * 100 / currtemp
+				},
+				});
+		}
+		return deltas;
+	};
+
+	function transformBar(data) {
+		
+		num_bars=12
+		for ( i = 0; i < num_bars; i++) {
+			$('.barswrapper').find('.curr_temp').eq(i).text(data[i].feels_like);
+			$('.barswrapper').find('.condition_img').eq(i).attr("src",data[i].icon_url);
+			$('.barswrapper').find('.time').eq(i).text(data[i].hour);
+			if (data[i].delta.direction == "warmer") {
+				$('.barswrapper').find('.bar-right').eq(i).hide();
+				$('.barswrapper').find('.bar-left').eq(i).css('width', '' + data[i].delta.percentage_change + '%');
+			} else {
+				$('.barswrapper').find('.bar-left').eq(i).hide();
+				$('.barswrapper').find('.bar-right').eq(i).css('width', '' + data[i].delta.percentage_change + '%');
+			}
+		}
+	}
+
+	//function getCurrentConditions(state, city) {};
 
 	function changeIcon(conditions, index) {
 		var icons = new Skycons();
