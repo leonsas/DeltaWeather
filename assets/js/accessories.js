@@ -60,6 +60,64 @@ $(function() {
 	function getConditions(position) {
 		getCityLocation(position.coords.latitude, position.coords.longitude);
 	}
+	
+	function displayAccessories(data) {
+		console.log("displayaccesories");
+		temp = data.currently.temperature;
+		console.log(temp);
+
+		precip = data.currently.precipIntensity;
+
+		//for 1st icon
+
+		if (precip > .01){
+			changeAccessoryIcon("umbrella", 0);
+		}
+		else {
+			changeAccessoryIcon("sunglasses", 0);
+		}
+		
+		//for 2nd icon
+		if (temp > 60){
+			changeAccessoryIcon("Tshirt", 1);
+		}
+		else if (temp > 50){
+			changeAccessoryIcon("LongSleeveShirt", 1);
+		}
+		else if (temp > 40 ){
+			changeAccessoryIcon("sweatshirt", 1);
+		}		
+		else {
+			changeAccessoryIcon("jacket", 1);
+		}
+
+
+		//for 3rd icon
+		if (temp > 70){
+			changeAccessoryIcon("shorts", 2);
+		}
+		else {
+			changeAccessoryIcon("pants", 2);
+		}
+
+		//for 4th icon
+		if (temp > 70){
+			changeAccessoryIcon("flipflops", 3);
+		}
+		else if (temp > 30){
+			changeAccessoryIcon("sneaker", 3);
+		}
+		else {
+			changeAccessoryIcon("snow_boots", 3);
+		}
+
+	}
+
+	function changeAccessoryIcon(clothingtop, position) {
+		accpathway = "assets/img/Accessories/" + clothingtop + ".svg"
+		$(".accessory-icon").eq(position).attr("src", accpathway);
+
+	}
 
 	function getCityLocation(latitude, longitude) {
 		initialize();
@@ -78,7 +136,7 @@ $(function() {
 			url : queryURL,
 			dataType : "jsonp",
 			success : function(data) {
-
+				displayAccessories(data);
 				//state = data.location.state;
 				//city = data.location.city;
 				//$('#current_location').text(city)
@@ -132,7 +190,7 @@ $(function() {
 				}
 
 				//console.log(data)
-				changeIcon(data.currently.icon, check);
+				//changeIcon(data.currently.icon, check);
 				yesterdayTime = time - 86400;
 				if (desired_unit == 'celsius') {
 					yesterdayURL = baseURL + latitude + ',' + longitude + ',' + yesterdayTime + '?exclude=minutely,hourly,alerts,flags?units=si.jsonp';
