@@ -42,7 +42,7 @@ $(function() {
 		desired_unit = $.cookie('unit');
 		if (desired_unit == 'celsius')
 		{
-		queryURL = baseURL + latitude + ',' + longitude + '?exclude=minutely,hourly,alerts,flags&units=si.jsonp';
+		queryURL = baseURL + latitude + ',' + longitude + '?exclude=minutely,hourly,alerts,flags?units=si.jsonp';
 		}
 		else
 		{
@@ -113,7 +113,7 @@ $(function() {
 						yesterdayTime = time - 86400;
 						if (desired_unit == 'celsius')
 						{
-						yesterdayURL = baseURL + latitude + ',' + longitude + ',' + yesterdayTime + '?exclude=minutely,hourly,alerts,flags&units=si.jsonp';
+						yesterdayURL = baseURL + latitude + ',' + longitude + ',' + yesterdayTime + '?exclude=minutely,hourly,alerts,flags?units=si.jsonp';
 						}
 						else
 						{
