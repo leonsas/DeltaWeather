@@ -3,6 +3,16 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+<head>
+  <!-- <meta charset="utf-8"> -->
+
+  <title>&Delta;Weather</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+<!-- Bootstrap -->
+<link href="assets/css/bootstrap.css" rel="stylesheet" media="screen">
+
 <style type="text/css">
 
       /* Sticky footer styles
@@ -14,37 +24,51 @@
         /* The html and body elements cannot have any padding or margin. */
       }
 
-      h4, h2{
-        text-align: center;
-      }
-
-      .main-content{
-        text-align: center;
-      }
-
       /* Wrapper for page content to push down footer */
       #wrap {
         min-height: 100%;
         height: auto !important;
         height: 100%;
         /* Negative indent footer by it's height */
-        margin: 0 auto -130px;
+        margin: 0 auto -165px;
       }
-    
+
+      /* Set the fixed height of the footer here */
+      #push,
+      #footer {
+        height: 60px;
+      }
+      #footer {
+        background-color: #f5f5f5;
+      }
+
+      /* Lastly, apply responsive CSS fixes as necessary */
+      @media (max-width: 767px) {
+        #footer {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+
+      /* Custom page CSS
+      -------------------------------------------------- */
+      /* Not required for template or sticky footer method. */
+
+      #wrap > .container {
+        padding-top: 60px;
+      }
+      .container .credit {
+        margin: 20px 0;
+      }
+      .main-content {
+        text-align: center;
+      }
 
     </style>
 
 
-
-
-<head>
-  <!-- <meta charset="utf-8"> -->
-
-  <title>&Delta;Weather</title>
- <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-
-<!-- Bootstrap -->
-<link href="assets/css/bootstrap.css" rel="stylesheet" media="screen">
 <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
@@ -56,7 +80,7 @@
 
 <body>
   
-
+<div id="wrap">
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <a class="brand" href="#">&Delta;W</a>
@@ -74,13 +98,11 @@
   <h2 id="delta_string"></h2> 
 
   <button id="switch_units">Switch to Celsius</button>
-
+</div>
 
 </div>
 
-
-
-  <div class="navbar navbar-fixed-bottom">
+<div class="navbar navbar-fixed-bottom">
   <div class="navbar-inner" style="text-align: center;">
     <ul class="nav">
       <li class="active"><a href="index.html"><img src="assets/img/home.svg" alt="home icon for homepage" style="width: auto; height: auto;"></a></li>
