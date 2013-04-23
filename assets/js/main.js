@@ -148,7 +148,7 @@ $(function() {
 						difference = difference.toFixed(0);
 						if (difference > 0) {
 							delta_string.innerHTML = '&uarr;' + difference + '&deg; from yesterday';
-						} else if (test < 0) {
+						} else if (difference < 0) {
 							difference *= -1;
 							delta_string.innerHTML = '&darr;' + difference + '&deg; from yesterday';
 						} else {
