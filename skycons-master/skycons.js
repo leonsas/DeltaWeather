@@ -527,7 +527,7 @@ var Skycons;
   Skycons = function(opts) {
     this.list        = [];
     this.interval    = null;
-    this.color       = opts && opts.color ? opts.color : '#D0E4F2';
+    this.color       = opts && opts.color ? opts.color : '#333333';
     this.resizeClear = !!(opts && opts.resizeClear);
   };
 

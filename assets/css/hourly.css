@@ -12,7 +12,7 @@ body {
 			height: 20px;
 			margin-bottom: 20px;
 			overflow: hidden;
-			background-color: #85A5CC;
+			
 			background-image: -moz-linear-gradient(top, #85A5CC, #85A5CC);
 			background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#85A5CC), to(#85A5CC));
 			background-image: -webkit-linear-gradient(top, #85A5CC, #85A5CC);
