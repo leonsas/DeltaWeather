@@ -75,10 +75,18 @@
         text-align: center;
       }
 
-      .navbar{
-        text-align: center;
+      .center.navbar .nav,
+      .center.navbar .nav > li {
+        float:none;
+        display:inline-block;
+        *display:inline; /* ie7 fix */
+        *zoom:1; /* hasLayout ie7 trigger */
+        vertical-align: top;
       }
 
+      .center .navbar-inner {
+       text-align:center;
+      }
     </style>
 
 <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
@@ -95,17 +103,18 @@
 
 <body>
 <div id="wrap">
-<div class="container">
-  <div class="navbar navbar-fixed-top">
+
+  <div class="navbar navbar-fixed-top center">
     <div class="navbar-inner">
+      <div class="container">
       <a class="brand" href="#">&Delta;W</a>
        <h4 class="brand" id="current_feels_like" href="#"></h4>
        <h5 class="brand" id="current_location"></h5>
+      </div>
     </div>
   </div>
-</div>
 
-</div>
+
 
 <div class="main-content">
   <ul style="list-style-type: none;">
@@ -118,11 +127,13 @@
 </div>
 
 
+</div>
 
 
-<div class="container">
-  <div class="navbar navbar-fixed-bottom">
+
+  <div class="navbar navbar-fixed-bottom center">
   <div class="navbar-inner" style="text-align: center;">
+    <div class="container">
     <ul class="nav">
       <li><a href="index.html"><img src="assets/img/home.svg" alt="home icon for homepage" style="width: auto; height: auto;"></a></li>
       <li><a href="hourly.html"><img src="assets/img/hourly.svg" alt="clock icon for hourly weather"></a></li>

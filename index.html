@@ -70,6 +70,19 @@
         text-align: center;
       }
 
+      .center.navbar .nav,
+      .center.navbar .nav > li {
+        float:none;
+        display:inline-block;
+        *display:inline; /* ie7 fix */
+        *zoom:1; /* hasLayout ie7 trigger */
+        vertical-align: top;
+      }
+
+      .center .navbar-inner {
+       text-align:center;
+      }
+
     </style>
 
 
@@ -80,12 +93,7 @@
 <script src="assets/js/jquery.cookie.js"></script>
 <script src="skycons-master/skycons.js"></script>
 <script src="assets/js/main.js"></script>
-<script>
-var geocoder;
 
-
-
-    </script>
 </head>
 
 <body>
@@ -112,7 +120,7 @@ var geocoder;
 
 </div>
 
-<div class="navbar navbar-fixed-bottom">
+<div class="navbar navbar-fixed-bottom center">
   <div class="navbar-inner" style="text-align: center;">
     <ul class="nav">
       <li class="active"><a href="index.html"><img src="assets/img/home.svg" alt="home icon for homepage" style="width: auto; height: auto;"></a></li>
