@@ -44,10 +44,15 @@ $(function() {
 		 yesterdayURL = baseURL + '/yesterday/q/' + state + '/' + city + '.json';
 		 hourlyURL = baseURL + '/hourly/q/' + state + '/' + city + '.json';*/
 		desired_unit = $.cookie('unit');
-		if (desired_unit == 'celsius') {
-			queryURL = baseURL + latitude + ',' + longitude + '?exclude=currently,minutely,daily,alerts,flags?units=si.jsonp';
-		} else {
-			queryURL = baseURL + latitude + ',' + longitude + '?exclude=currently,minutely,daily,alerts,flags.jsonp';
+
+		if (desired_unit == 'celsius')
+		{
+		queryURL = baseURL + latitude + ',' + longitude + '?exclude=currently,minutely,daily,alerts,flags&units=si';
+		}
+		else
+		{
+		queryURL = baseURL + latitude + ',' + longitude + '?exclude=currently,minutely,daily,alerts,flags';
+
 		}
 		$.ajax({
 			url : queryURL,
