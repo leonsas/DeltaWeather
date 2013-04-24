@@ -88,14 +88,18 @@
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script src="assets/js/jquery.cookie.js"></script>
 		<script src="skycons-master/skycons.js"></script>
-		<script src="assets/js/main.js"></script>
+		<script src="assets/js/Chart.js"></script>
 		<script src="assets/js/hourly.js"></script>
 		<link href="assets/css/hourly.css" rel="stylesheet">
-
+  <style>
+  
+  </style>
+		
+    
 
 	</head>
 
-	<body>
+	<body >
 
 <div id="wrap">
   <div class="navbar navbar-fixed-top">
@@ -107,31 +111,41 @@
   </div>
 
 
+<canvas id="delta" height="400" width="400"></canvas>
 
+	
 
-		<div class="barswrapper">
+		<!--<div class="barswrapper">
 
 			<div class="row-fluid">
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-right" style="width: 0%;"></div>
+						<div class="bar-right" style='width:0%'> </div>
 					</div>
 				</div>
 				<div class="span1">
 					<p class='curr_temp'></p>
 					<p class='time'></p>
 					<figure class="icons"><canvas id="condition1" width="42" height="42"></canvas></figure>
+				 
 				</div>
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-left" style="width: 0%"></div>
+						<div class="bar-left" style='width:0%'> </div>
+					</div>
+				</div>
+			</div>
+		</div>
+				<div class="span5">
+					<div class="progress">
+						<div class="bar-left" style='width:auto'></div>
 					</div>
 				</div>
 			</div>
 			<div class="row-fluid">
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-right" style="width: 0%;"></div>
+						<div class="bar-right" style='width:auto'></div>
 					</div>
 				</div>
 				<div class="span1">
@@ -141,31 +155,32 @@
 				</div>
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-left" style="width: 0%"></div>
+						<div class="bar-left" style='width:auto'></div>
 					</div>
 				</div>
 			</div>
 			<div class="row-fluid">
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-right" style="width: 0%;"></div>
+						<div class="bar-right" style='width:auto'></div>
 					</div>
 				</div>
-				<div class="span1">
+								<div class="span1">
 					<p class='curr_temp'></p>
 					<p class='time'></p>
 					<figure class="icons"><canvas id="condition3" width="42" height="42"></canvas></figure>
 				</div>
+				<progress value="10" max="100"></progress>  
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-left" style="width: 0%"></div>
+						<div class="bar-left" style='width:auto'></div>
 					</div>
 				</div>
-			</div>
+							</div>
 			<div class="row-fluid">
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-right" style="width: 0%;"></div>
+						<div class="bar-right" style='width:auto'></div>
 					</div>
 				</div>
 				<div class="span1">
@@ -175,14 +190,14 @@
 				</div>
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-left" style="width: 0%"></div>
+						<div class="bar-left" style='width:auto'></div>
 					</div>
 				</div>
 			</div>
 			<div class="row-fluid">
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-right" style="width: 0%;"></div>
+						<div class="bar-right" style='width:auto'></div>
 					</div>
 				</div>
 				<div class="span1">
@@ -192,14 +207,14 @@
 				</div>
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-left" style="width: 0%"></div>
+						<div class="bar-left" style='width:auto'></div>
 					</div>
 				</div>
 			</div>
 			<div class="row-fluid">
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-right" style="width: 0%;"></div>
+						<div class="bar-right" style='width:auto'></div>
 					</div>
 				</div>
 				<div class="span1">
@@ -209,14 +224,14 @@
 				</div>
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-left" style="width: 0%"></div>
+						<div class="bar-left" style='width:auto'></div>
 					</div>
 				</div>
 			</div>
 			<div class="row-fluid">
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-right" style="width: 0%;"></div>
+						<div class="bar-right" style='width:auto'></div>
 					</div>
 				</div>
 				<div class="span1">
@@ -226,14 +241,14 @@
 				</div>
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-left" style="width: 0%"></div>
+						<div class="bar-left" style='width:auto'></div>
 					</div>
 				</div>
 			</div>
 			<div class="row-fluid">
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-right" style="width: 0%;"></div>
+						<div class="bar-right" style='width:auto'></div>
 					</div>
 				</div>
 				<div class="span1">
@@ -243,14 +258,14 @@
 				</div>
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-left" style="width: 0%"></div>
+						<div class="bar-left" style='width:auto'></div>
 					</div>
 				</div>
 			</div>
 			<div class="row-fluid">
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-right" style="width: 0%;"></div>
+						<div class="bar-right" style='width:auto'></div>
 					</div>
 				</div>
 				<div class="span1">
@@ -260,14 +275,14 @@
 				</div>
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-left" style="width: 0%"></div>
+						<div class="bar-left" style='width:auto'></div>
 					</div>
 				</div>
 			</div>
 			<div class="row-fluid">
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-right" style="width: 0%;"></div>
+						<div class="bar-right" style='width:auto'></div>
 					</div>
 				</div>
 				<div class="span1">
@@ -277,14 +292,14 @@
 				</div>
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-left" style="width: 0%"></div>
+						<div class="bar-left" style='width:auto'></div>
 					</div>
 				</div>
 			</div>
 			<div class="row-fluid">
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-right" style="width: 0%;"></div>
+						<div class="bar-right" style='width:auto'></div>
 					</div>
 				</div>
 				<div class="span1">
@@ -294,14 +309,14 @@
 				</div>
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-left" style="width: 0%"></div>
+						<div class="bar-left" style='width:auto'></div>
 					</div>
 				</div>
 			</div>
 			<div class="row-fluid">
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-right" style="width: 0%;"></div>
+						<div class="bar-right" style='width:auto'></div>
 					</div>
 				</div>
 				<div class="span1">
@@ -311,11 +326,11 @@
 				</div>
 				<div class="span5">
 					<div class="progress">
-						<div class="bar-left" style="width: 0%"></div>
+						<div class="bar-left" style='width:auto'></div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>-->
 
 </div>
 

@@ -56,12 +56,13 @@ $(function() {
 			url: queryURL,
 			dataType : "jsonp",
 			success : function(data) {
-				deltas = getHourlyDeltas(data);
-				transformBar(deltas);
-				for (i = 1; 1 < 13; i++)
-				{
-				changeIcon(data.hourly.data[i].icon, i);
-				}
+				hourlies = getHourlyData(data);
+				//transformBar(deltas);
+				linechart(hourlies);
+				//for (i = 1; 1 < 13; i++)
+				//{
+				//changeIcon(data.hourly.data[i].icon, i);
+				//}
 				}
 			});
 		//now query wunderground for current conditions for the city/state, and display 		the Feels Like temp.
@@ -130,8 +131,26 @@ $(function() {
 		}
 		return deltas;
 	};*/
+
+	function linechart(input){
+		var lineChartData = {
+			labels : [input[0].hour, input[1].hour,input[2].hour,input[3].hour,input[4].hour,input[5].hour,input[6].hour,input[7].hour,input[8].hour,input[9].hour,input[10].hour,input[11].hour],
+			datasets : [
+				{
+					fillColor : "rgba(151,187,205,0.5)",
+					strokeColor : "rgba(151,187,205,1)",
+					pointColor : "rgba(151,187,205,1)",
+					pointStrokeColor : "#fff",
+					data : [input[0].temp, input[1].temp,input[2].temp,input[3].temp,input[4].temp,input[5].temp,input[6].temp,input[7].temp,input[8].temp,input[9].temp,input[10].temp,input[11].temp]
+				}
+					  ]
+						   }
+
+	var myLine = $("#delta").get(0).getContext("2d");
+	var myNewChart = new Chart(myLine).Line(lineChartData);
+	}
 	
-	function getHourlyDeltas(data) {
+	/*function getHourlyDeltas(data) {
 		deltas = [];
 		for (i = 1; i < 13; i++)
 		{
@@ -151,8 +170,22 @@ $(function() {
 				});
 		}
 		return deltas;
-	};
+	};*/
 
+	function getHourlyData(data) {
+	hourlies = [];
+	for (i = 1; i < 13; i++)
+	{
+	var timestamp = new Date(data.hourly.data[i].time * 1000);
+	hour_string = timestamp.toLocaleTimeString();
+	feels_like_temp = data.hourly.data[i].temperature;
+	hourlies.push({
+		hour : hour_string,
+		temp : feels_like_temp});
+	}
+		return hourlies;
+	};
+	
 	function transformBar(data) {
 		
 		num_bars=12
@@ -250,6 +283,8 @@ $(function() {
             }
 		icons.play();
 	};
+
+	
 
 	getGeoLocation();
 });
