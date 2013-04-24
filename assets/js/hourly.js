@@ -46,11 +46,11 @@ $(function() {
 		desired_unit = $.cookie('unit');
 		if (desired_unit == 'celsius')
 		{
-		queryURL = baseURL + latitude + ',' + longitude + '?exclude=currently,minutely,daily,alerts,flags?units=si.jsonp';
+		queryURL = baseURL + latitude + ',' + longitude + '?exclude=currently,minutely,daily,alerts,flags&units=si';
 		}
 		else
 		{
-		queryURL = baseURL + latitude + ',' + longitude + '?exclude=currently,minutely,daily,alerts,flags.jsonp';
+		queryURL = baseURL + latitude + ',' + longitude + '?exclude=currently,minutely,daily,alerts,flags';
 		}
 		$.ajax({
 			url: queryURL,
