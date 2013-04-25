@@ -29,169 +29,177 @@ $(function() {
 
 		//GET call that returns the geolookup info
 		/*$.ajax({
-			url : queryURL,
-			dataType : "jsonp",
-			success : function(data) {
-				state = data.location.state;
-				city = data.location.city;
+		 url : queryURL,
+		 dataType : "jsonp",
+		 success : function(data) {
+		 state = data.location.state;
+		 city = data.location.city;
 
-				//Lets get the current conditions for this state and city.
-				getCurrentConditions(state, city);
-			}
-		});
-		//new URL
-		conditionURL = baseURL + '/conditions/q/' + state + '/' + city + '.json';
-		yesterdayURL = baseURL + '/yesterday/q/' + state + '/' + city + '.json';
-		hourlyURL = baseURL + '/hourly/q/' + state + '/' + city + '.json';*/
+		 //Lets get the current conditions for this state and city.
+		 getCurrentConditions(state, city);
+		 }
+		 });
+		 //new URL
+		 conditionURL = baseURL + '/conditions/q/' + state + '/' + city + '.json';
+		 yesterdayURL = baseURL + '/yesterday/q/' + state + '/' + city + '.json';
+		 hourlyURL = baseURL + '/hourly/q/' + state + '/' + city + '.json';*/
 		desired_unit = $.cookie('unit');
+
 		if (desired_unit == 'celsius')
 		{
-		queryURL = baseURL + latitude + ',' + longitude + '?exclude=currently,minutely,daily,alerts,flags?units=si.jsonp';
+		queryURL = baseURL + latitude + ',' + longitude + '?exclude=currently,minutely,daily,alerts,flags&units=si';
 		}
 		else
 		{
-		queryURL = baseURL + latitude + ',' + longitude + '?exclude=currently,minutely,daily,alerts,flags.jsonp';
+		queryURL = baseURL + latitude + ',' + longitude + '?exclude=currently,minutely,daily,alerts,flags';
+
 		}
 		$.ajax({
-			url: queryURL,
+			url : queryURL,
 			dataType : "jsonp",
 			success : function(data) {
-				hourlies = getHourlyData(data);
+				currtemp = data.hourly.data[0].temperature;
+				hourlies = getHourlyData(currtemp,data);
+				console.log(hourlies);
 				//transformBar(deltas);
 				linechart(hourlies);
 				//for (i = 1; 1 < 13; i++)
 				//{
 				//changeIcon(data.hourly.data[i].icon, i);
 				//}
-				}
-			});
+			}
+		});
 		//now query wunderground for current conditions for the city/state, and display 		the Feels Like temp.
 		/*$.ajax({
-			url : yesterdayURL,
-			dataType : "jsonp",
-			success : function(data) {
+		 url : yesterdayURL,
+		 dataType : "jsonp",
+		 success : function(data) {
 
-				$.ajax({
-					url : conditionURL,
-					dataType : "jsonp",
-					success : function(data2) {
-						$.ajax({
-							url : hourlyURL,
-							dataType : "jsonp",
-							success : function(data3) {
-								var date = new Date();
-								var hour = date.getHours();
-								var j = 0;
-								var k = 0;
-								console.log(data);
+		 $.ajax({
+		 url : conditionURL,
+		 dataType : "jsonp",
+		 success : function(data2) {
+		 $.ajax({
+		 url : hourlyURL,
+		 dataType : "jsonp",
+		 success : function(data3) {
+		 var date = new Date();
+		 var hour = date.getHours();
+		 var j = 0;
+		 var k = 0;
+		 console.log(data);
 
-								while (j != hour) {
-									j = data.history.observations[k].date.hour;
-									k++;
-								}
-								k--;
-								weatherpic = document.getElementById('weatherpic');
-								current = data2.current_observation.temp_f;
-								console.log(data3);
-								deltas = getHourlyDeltas(current, data3);
+		 while (j != hour) {
+		 j = data.history.observations[k].date.hour;
+		 k++;
+		 }
+		 k--;
+		 weatherpic = document.getElementById('weatherpic');
+		 current = data2.current_observation.temp_f;
+		 console.log(data3);
+		 deltas = getHourlyDeltas(current, data3);
 
-								transformBar(deltas);
-								yesterday = data.history.observations[k].tempi;
-							}
-						});
-					}
-				});
-			}
-		});*/
+		 transformBar(deltas);
+		 yesterday = data.history.observations[k].tempi;
+		 }
+		 });
+		 }
+		 });
+		 }
+		 });*/
 	};
 
-	/*function getHourlyDeltas(currtemp, data) {
+	function getHourlyDeltas(currtemp, data) {
 
-		deltas = [];
-		for ( i = 0; i < 12; i++) {
+	 deltas = [];
+	 for ( i = 0; i < 12; i++) {
 
-			hour_string = data.hourly_forecast[i].FCTTIME.civil;
-			feels_like_temp = data.hourly_forecast[i].feelslike.english;
-			icon_url = data.hourly_forecast[i].icon_url
-			
-			delta = feels_like_temp - currtemp;
+	 hour_string = data.hourly_forecast[i].FCTTIME.civil;
+	 feels_like_temp = data.hourly_forecast[i].feelslike.english;
+	 icon_url = data.hourly_forecast[i].icon_url
 
-			deltas.push({
-				hour : hour_string,
-				feels_like : feels_like_temp,
-				icon_url : icon_url,
-				delta : {
-					magnitude : Math.abs(delta),
-					direction : delta ? delta < 0 ? 'colder' : 'warmer' : 0,
-					percentage_change : Math.abs(delta) * 100 / currtemp
-				},
+	 delta = feels_like_temp - currtemp;
 
-			});
+	 deltas.push({
+	 hour : hour_string,
+	 feels_like : feels_like_temp,
+	 icon_url : icon_url,
+	 delta : {
+	 magnitude : Math.abs(delta),
+	 direction : delta ? delta < 0 ? 'colder' : 'warmer' : 0,
+	 percentage_change : Math.abs(delta) * 100 / currtemp
+	 },
 
-		}
-		return deltas;
-	};*/
+	 });
 
-	function linechart(input){
-		var lineChartData = {
-			labels : [input[0].hour, input[1].hour,input[2].hour,input[3].hour,input[4].hour,input[5].hour,input[6].hour,input[7].hour,input[8].hour,input[9].hour,input[10].hour,input[11].hour],
-			datasets : [
-				{
-					fillColor : "rgba(151,187,205,0.5)",
-					strokeColor : "rgba(151,187,205,1)",
-					pointColor : "rgba(151,187,205,1)",
-					pointStrokeColor : "#fff",
-					data : [input[0].temp, input[1].temp,input[2].temp,input[3].temp,input[4].temp,input[5].temp,input[6].temp,input[7].temp,input[8].temp,input[9].temp,input[10].temp,input[11].temp]
+	 }
+	 return deltas;
+	};
+
+	function linechart(input) {
+		labels= []
+		data_colder = [];
+		data_warmer =[];
+			for (i = 0; i< 12;i++){
+				labels.push(input[i].hour);
+				if (input[i].direction == "colder"){
+				data_colder.push(input[i].percentage_change);
 				}
-					  ]
-						   }
-
-	var myLine = $("#delta").get(0).getContext("2d");
-	var myNewChart = new Chart(myLine).Line(lineChartData);
-	}
-	
-	/*function getHourlyDeltas(data) {
-		deltas = [];
-		for (i = 1; i < 13; i++)
-		{
-		var timestamp = new Date(data.hourly.data[i].time * 1000);
-		hour_string = timestamp.toLocaleTimeString();
-		currtemp = data.hourly.data[0].temperature;
-		feels_like_temp = data.hourly.data[i].temperature;
-		delta = feels_like_temp - currtemp;
-		deltas.push({
-			hour : hour_string,
-			feels_like : feels_like_temp,
-			delta : {
-				magnitude : Math.abs(delta),
-				direction : delta ? delta < 0 ? 'colder' : 'warmer' : 0,
-				percentage_change : Math.abs(delta) * 100 / currtemp
-				},
-				});
+				else{
+					data_warmer.push(input[i].percentage_change);
+				}
+			}
+		console.log(data_warmer)
+		var lineChartData = {
+			labels : labels,
+			datasets : [{
+				fillColor : "rgba(151,187,205,0.5)",
+				strokeColor : "rgba(151,187,205,1)",
+				pointColor : "rgba(151,187,205,1)",
+				pointStrokeColor : "#fff",
+				data : data_colder
+			}
+			
+			
+			
+			
+			]
 		}
-		return deltas;
-	};*/
 
-	function getHourlyData(data) {
-	hourlies = [];
-	for (i = 1; i < 13; i++)
-	{
-	var timestamp = new Date(data.hourly.data[i].time * 1000);
-	hour_string = timestamp.toLocaleTimeString();
-	feels_like_temp = data.hourly.data[i].temperature;
-	hourlies.push({
-		hour : hour_string,
-		temp : feels_like_temp});
+		var myLine = $("#delta").get(0).getContext("2d");
+
+		var myNewChart = new Chart(myLine).Bar(lineChartData, {
+			scaleShowGridLines : false,
+			scaleStartValue : 0,
+			scaleOverride : 0,
+			scaleShowLabels : true,
+		});
 	}
+
+	function getHourlyData(currtemp, data) {
+		hourlies = [];
+		for ( i = 1; i < 13; i++) {
+			var timestamp = new Date(data.hourly.data[i].time * 1000);
+			hour_string = timestamp.toLocaleTimeString();
+			feels_like_temp = data.hourly.data[i].temperature;
+			delta = feels_like_temp - currtemp;
+			hourlies.push({
+				hour : hour_string,
+				temp : feels_like_temp,
+				magnitude : Math.abs(delta),
+	 			direction : delta ? delta < 0 ? 'colder' : 'warmer' : 0,
+	 			percentage_change : Math.abs(delta) * 100 / currtemp
+			});
+		}
 		return hourlies;
 	};
-	
+
 	function transformBar(data) {
-		
-		num_bars=12
+
+		num_bars = 12
 		for ( i = 0; i < num_bars; i++) {
 			$('.barswrapper').find('.curr_temp').eq(i).text(data[i].feels_like);
-			$('.barswrapper').find('.condition_img').eq(i).attr("src",data[i].icon_url);
+			$('.barswrapper').find('.condition_img').eq(i).attr("src", data[i].icon_url);
 			$('.barswrapper').find('.time').eq(i).text(data[i].hour);
 			if (data[i].delta.direction == "warmer") {
 				$('.barswrapper').find('.bar-right').eq(i).hide();
@@ -278,13 +286,11 @@ $(function() {
 				icons.set(cond, Skycons.PARTLY_CLOUDY_NIGHT);
 				break;
 			default:
-                icons.set(cond, Skycons.CLEAR_DAY);
+				icons.set(cond, Skycons.CLEAR_DAY);
 				break;
-            }
+		}
 		icons.play();
 	};
-
-	
 
 	getGeoLocation();
 });

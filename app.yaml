@@ -8,9 +8,18 @@ handlers:
   static_files: \1
   upload: (.*\.(gif|png|jpg|ico|js|css))
 
+- url: /(.*\.svg)
+  static_files: static/\1
+  upload: static/(.*\.svg)
+  mime_type: image/svg+xml
+
 - url: /robots.txt
   static_files: robots.txt
-  upload: robots.txt 
+  upload: robots.txt
+
+- url: /(.*\.xml)
+  static_files: static/\1
+  upload: static/(.*\.xml) 
 
 - url: .*
   script: main.py

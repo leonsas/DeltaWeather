@@ -114,7 +114,7 @@ $(function() {
 	}
 
 	function changeAccessoryIcon(clothingtop, position) {
-		accpathway = "assets/img/Accessories/" + clothingtop + ".svg"
+		accpathway = "assets/img/Accessories/" + clothingtop + ".png"
 		$(".accessory-icon").eq(position).attr("src", accpathway);
 
 	}
@@ -125,9 +125,9 @@ $(function() {
 		//new URL that does a geolookup to get a city name from lat/lon
 		desired_unit = $.cookie('unit');
 		if (desired_unit == 'celsius') {
-			queryURL = baseURL + latitude + ',' + longitude + '?exclude=minutely,hourly,alerts,flags?units=si.jsonp';
+			queryURL = baseURL + latitude + ',' + longitude + '?exclude=minutely,hourly,alerts,flags&units=si';
 		} else {
-			queryURL = baseURL + latitude + ',' + longitude + '?exclude=minutely,hourly,alerts,flags.jsonp';
+			queryURL = baseURL + latitude + ',' + longitude + '?exclude=minutely,hourly,alerts,flags';
 		}
 		googleURL = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&sensor=true';
 
@@ -193,9 +193,9 @@ $(function() {
 				//changeIcon(data.currently.icon, check);
 				yesterdayTime = time - 86400;
 				if (desired_unit == 'celsius') {
-					yesterdayURL = baseURL + latitude + ',' + longitude + ',' + yesterdayTime + '?exclude=minutely,hourly,alerts,flags?units=si.jsonp';
+					yesterdayURL = baseURL + latitude + ',' + longitude + ',' + yesterdayTime + '?exclude=minutely,hourly,alerts,flags&units=si';
 				} else {
-					yesterdayURL = baseURL + latitude + ',' + longitude + ',' + yesterdayTime + '?exclude=minutely,hourly,alerts,flags.jsonp';
+					yesterdayURL = baseURL + latitude + ',' + longitude + ',' + yesterdayTime + '?exclude=minutely,hourly,alerts,flags';
 				}
 				$.ajax({
 					url : yesterdayURL,
