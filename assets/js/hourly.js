@@ -24,34 +24,15 @@ $(function() {
 	}
 
 	function getCityLocation(latitude, longitude) {
-		//new URL that does a geolookup to get a city name from lat/lon
-		//queryURL = baseURL + '/geolookup/q/' + latitude + ',' + longitude + '.json';
-
-		//GET call that returns the geolookup info
-		/*$.ajax({
-		 url : queryURL,
-		 dataType : "jsonp",
-		 success : function(data) {
-		 state = data.location.state;
-		 city = data.location.city;
-
-		 //Lets get the current conditions for this state and city.
-		 getCurrentConditions(state, city);
-		 }
-		 });
-		 //new URL
-		 conditionURL = baseURL + '/conditions/q/' + state + '/' + city + '.json';
-		 yesterdayURL = baseURL + '/yesterday/q/' + state + '/' + city + '.json';
-		 hourlyURL = baseURL + '/hourly/q/' + state + '/' + city + '.json';*/
 		desired_unit = $.cookie('unit');
 
 		if (desired_unit == 'celsius')
 		{
-		queryURL = baseURL + latitude + ',' + longitude + '?exclude=currently,minutely,daily,alerts,flags&units=si';
+		queryURL = baseURL + latitude + ',' + longitude + '?exclude=minutely,daily,alerts,flags&units=si';
 		}
 		else
 		{
-		queryURL = baseURL + latitude + ',' + longitude + '?exclude=currently,minutely,daily,alerts,flags';
+		queryURL = baseURL + latitude + ',' + longitude + '?exclude=minutely,daily,alerts,flags';
 
 		}
 		$.ajax({
@@ -60,13 +41,21 @@ $(function() {
 			success : function(data) {
 				currtemp = data.hourly.data[0].temperature;
 				hourlies = getHourlyData(currtemp,data);
+				console.log(data);
+					current = data.currently.temperature;
+					
+				if (desired_unit == 'celsius') {
+					
+					$("#current_feels_like").text('Feels like ' + current + '\u00B0 C');
+					
+				} else {
+					
+					$("#current_feels_like").text('Feels like ' + current + '\u00B0 F');
+				
+				}
 				console.log(hourlies);
-				//transformBar(deltas);
 				linechart(hourlies);
-				//for (i = 1; 1 < 13; i++)
-				//{
-				//changeIcon(data.hourly.data[i].icon, i);
-				//}
+				
 			}
 		});
 		//now query wunderground for current conditions for the city/state, and display 		the Feels Like temp.
