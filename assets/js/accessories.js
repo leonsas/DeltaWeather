@@ -114,7 +114,7 @@ $(function() {
 	}
 
 	function changeAccessoryIcon(clothingtop, position) {
-		accpathway = "assets/img/Accessories/" + clothingtop + ".svg"
+		accpathway = "assets/img/Accessories/" + clothingtop + ".png"
 		$(".accessory-icon").eq(position).attr("src", accpathway);
 
 	}
