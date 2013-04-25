@@ -64,6 +64,10 @@ $(function() {
 	function displayAccessories(data) {
 		console.log("displayaccesories");
 		temp = data.currently.temperature;
+		desired_unit = $.cookie('unit');
+		if (desired_unit == "celsius"){
+			temp = temp *1.8 + 32;
+		}
 		console.log(temp);
 
 		precip = data.currently.precipIntensity;
@@ -137,83 +141,33 @@ $(function() {
 			dataType : "jsonp",
 			success : function(data) {
 				displayAccessories(data);
-				//state = data.location.state;
-				//city = data.location.city;
-				//$('#current_location').text(city)
-				//Lets get the current conditions for this state and city.
-				//getCurrentConditions(state, city);
-				//new URL
-				//conditionURL = baseURL + '/conditions/yesterday/astronomy/q/' + state + '/' + city + '.json';
+				
 				var delta_string = document.getElementById('delta_string');
 				var currentlyfeelhtml = document.getElementById("current_feels_like");
 
-				//now query wunderground for current conditions for the city/state, and display 		the Feels Like temp.
-				/*$.ajax({
-				url : conditionURL,
-				dataType : "jsonp",
-				success : function(data) {*/
-
-				//var date = new Date();
-				//var hour = date.getHours();
 				var time = data.currently.time;
-				/*
-				var j = 0;
-				var k = 0;
-				while(j != hour){
-				j = data.history.observations[k].date.hour;
-				k++;
-				}
-				k--;
-				weatherpic = document.getElementById('weatherpic');
-				current = data.current_observation.temp_f;
-				yesterday = data.history.observations[k].tempi;
-				*/
-				//var sunrise = data.moon_phase.sunrise.hour;
+				
 				var sunrise = data.daily.sunriseTime;
-				//var sunset = data.moon_phase.sunset.hour;
+
 				var sunset = data.daily.sunsetTime;
 				var check = 1;
 				if (time < sunrise || time > sunset) {
 					check = 0;
 				}
 
-				weatherpic = document.getElementById('weatherpic');
 				current = data.currently.temperature;
 				if (desired_unit == 'celsius') {
 					//current = data.current_observation.temp_c;
-					current_feels_like.innerHTML = 'Feels like ' + current + '&#176; C';
+					$("#current_feels_like").text('Feels like ' + current + '\u00B0 C');
 					//yesterday = data.history.dailysummary[0].meantempm;
 				} else {
 					//current = data.current_observation.temp_f;
-					current_feels_like.innerHTML = 'Feels like ' + current + '&#176; F';
+					$("#current_feels_like").text('Feels like ' + current + '\u00B0 F');
 					//yesterday = data.history.dailysummary[0].meantempi;
 				}
 
-				//console.log(data)
-				//changeIcon(data.currently.icon, check);
-				yesterdayTime = time - 86400;
-				if (desired_unit == 'celsius') {
-					yesterdayURL = baseURL + latitude + ',' + longitude + ',' + yesterdayTime + '?exclude=minutely,hourly,alerts,flags&units=si';
-				} else {
-					yesterdayURL = baseURL + latitude + ',' + longitude + ',' + yesterdayTime + '?exclude=minutely,hourly,alerts,flags';
-				}
-				$.ajax({
-					url : yesterdayURL,
-					dataType : "jsonp",
-					success : function(data2) {
-						yesterday = data2.currently.temperature;
-						difference = current - yesterday;
-						difference = difference.toFixed(0);
-						if (difference > 0) {
-							delta_string.innerHTML = '&uarr;' + difference + '&deg; from yesterday';
-						} else if (difference < 0) {
-							difference *= -1;
-							delta_string.innerHTML = '&darr;' + difference + '&deg; from yesterday';
-						} else {
-							delta_string.innerHTML = 'It is the same temperature as yesterday.';
-						}
-					}
-				});
+			
+				
 			}
 		});
 		//}
