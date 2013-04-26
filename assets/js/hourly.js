@@ -5,8 +5,7 @@
  */
 $(function() {
 
-	// this is using my api key from wunderground
-	//var baseURL = 'http://api.wunderground.com/api/1d0606d6ee23da9e';
+	// api key from Forecast.io
 	var baseURL = 'https://api.forecast.io/forecast/fc590758007d8f0eb51877e6883ffda1/';
 
 	function getGeoLocation() {
@@ -58,44 +57,7 @@ $(function() {
 				
 			}
 		});
-		//now query wunderground for current conditions for the city/state, and display 		the Feels Like temp.
-		/*$.ajax({
-		 url : yesterdayURL,
-		 dataType : "jsonp",
-		 success : function(data) {
-
-		 $.ajax({
-		 url : conditionURL,
-		 dataType : "jsonp",
-		 success : function(data2) {
-		 $.ajax({
-		 url : hourlyURL,
-		 dataType : "jsonp",
-		 success : function(data3) {
-		 var date = new Date();
-		 var hour = date.getHours();
-		 var j = 0;
-		 var k = 0;
-		 console.log(data);
-
-		 while (j != hour) {
-		 j = data.history.observations[k].date.hour;
-		 k++;
-		 }
-		 k--;
-		 weatherpic = document.getElementById('weatherpic');
-		 current = data2.current_observation.temp_f;
-		 console.log(data3);
-		 deltas = getHourlyDeltas(current, data3);
-
-		 transformBar(deltas);
-		 yesterday = data.history.observations[k].tempi;
-		 }
-		 });
-		 }
-		 });
-		 }
-		 });*/
+		
 	};
 
 	function getHourlyDeltas(currtemp, data) {
@@ -148,8 +110,6 @@ $(function() {
 				pointStrokeColor : "#fff",
 				data : data_colder
 			}
-			
-			
 			
 			
 			]

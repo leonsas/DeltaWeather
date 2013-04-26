@@ -1,13 +1,11 @@
 /*
- * Simple way to use HTML5 geolocation API to obtain the location of the user.
- * We'll need user's location to get the local weather.
  *
  */
 var geocoder;
 $(function() {
 	function initialize() {
 		geocoder = new google.maps.Geocoder();
-		var latlng = new google.maps.LatLng(40.730885, -73.997383);
+		//var latlng = new google.maps.LatLng(40.730885, -73.997383);
 	}
 
 	function codeLatLng(lat, lng) {
@@ -16,34 +14,20 @@ $(function() {
 			'latLng' : latlng
 		}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
-				if (results[1]) {
-					
+				if (results[1]) {					
 					$('#current_location').text(results[0].address_components[3].short_name);
-				} else {
+				} 
+				else {
 					console.log('No results found');
 				}
-			} else {
+			} 
+			else {
 				console.log('Geocoder failed due to: ' + status);
 			}
 		});
 	}
 
-	function switchUnitsButtonTextUpdate() {
-
-		current_unit = $.cookie('unit');
-		if (current_unit == 'celsius') {
-			$("#switch_units").text("Switch to Fahrenheit");
-		} else {
-			$("#switch_units").text("Switch to Celsius");
-		}
-	}
-
-	// this is using my api key from wunderground
-	// 394yellow@gmail.com 	def220061728b00b
-	// leonsassonha  da56c81ebb4c6a60
-	// fitzcn 52469e66c6aa5600
-	// grossbill6 1d0606d6ee23da9e
-	//var baseURL = 'http://api.wunderground.com/api/1d0606d6ee23da9e';
+	
 	//key from forecast.io
 	var baseURL = 'https://api.forecast.io/forecast/fc590758007d8f0eb51877e6883ffda1/';
 
@@ -60,6 +44,56 @@ $(function() {
 	function getConditions(position) {
 		getCityLocation(position.coords.latitude, position.coords.longitude);
 	}
+
+
+		function getCityLocation(latitude, longitude) {
+		initialize();
+		codeLatLng(latitude, longitude);
+		//new URL that does a geolookup to get a city name from lat/lon
+		desired_unit = $.cookie('unit');
+		if (desired_unit == 'celsius') {
+			queryURL = baseURL + latitude + ',' + longitude + '?exclude=minutely,hourly,alerts,flags&units=si';
+		} else {
+			queryURL = baseURL + latitude + ',' + longitude + '?exclude=minutely,hourly,alerts,flags';
+		}
+		//googleURL = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&sensor=true';
+
+		//GET call that returns the geolookup info
+		$.ajax({
+			url : queryURL,
+			dataType : "jsonp",
+			success : function(data) {
+				displayAccessories(data);
+				
+				var delta_string = document.getElementById('delta_string');
+				var currentlyfeelhtml = document.getElementById("current_feels_like");
+
+				var time = data.currently.time;
+				
+				var sunrise = data.daily.sunriseTime;
+
+				var sunset = data.daily.sunsetTime;
+				var check = 1;
+				if (time < sunrise || time > sunset) {
+					check = 0;
+				}
+
+				current = data.currently.temperature;
+				if (desired_unit == 'celsius') {
+					//current = data.current_observation.temp_c;
+					$("#current_feels_like").text('Feels like ' + current + '\u00B0 C');
+					//yesterday = data.history.dailysummary[0].meantempm;
+				} else {
+					//current = data.current_observation.temp_f;
+					$("#current_feels_like").text('Feels like ' + current + '\u00B0 F');
+					//yesterday = data.history.dailysummary[0].meantempi;
+				}	
+			}
+		});
+
+	};
+
+
 	
 	function displayAccessories(data) {
 		console.log("displayaccesories");
@@ -123,124 +157,6 @@ $(function() {
 
 	}
 
-	function getCityLocation(latitude, longitude) {
-		initialize();
-		codeLatLng(latitude, longitude);
-		//new URL that does a geolookup to get a city name from lat/lon
-		desired_unit = $.cookie('unit');
-		if (desired_unit == 'celsius') {
-			queryURL = baseURL + latitude + ',' + longitude + '?exclude=minutely,hourly,alerts,flags&units=si';
-		} else {
-			queryURL = baseURL + latitude + ',' + longitude + '?exclude=minutely,hourly,alerts,flags';
-		}
-		googleURL = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&sensor=true';
-
-		//GET call that returns the geolookup info
-		$.ajax({
-			url : queryURL,
-			dataType : "jsonp",
-			success : function(data) {
-				displayAccessories(data);
-				
-				var delta_string = document.getElementById('delta_string');
-				var currentlyfeelhtml = document.getElementById("current_feels_like");
-
-				var time = data.currently.time;
-				
-				var sunrise = data.daily.sunriseTime;
-
-				var sunset = data.daily.sunsetTime;
-				var check = 1;
-				if (time < sunrise || time > sunset) {
-					check = 0;
-				}
-
-				current = data.currently.temperature;
-				if (desired_unit == 'celsius') {
-					//current = data.current_observation.temp_c;
-					$("#current_feels_like").text('Feels like ' + current + '\u00B0 C');
-					//yesterday = data.history.dailysummary[0].meantempm;
-				} else {
-					//current = data.current_observation.temp_f;
-					$("#current_feels_like").text('Feels like ' + current + '\u00B0 F');
-					//yesterday = data.history.dailysummary[0].meantempi;
-				}
-
-			
-				
-			}
-		});
-		//}
-		//});
-
-	};
-
-	//function getCurrentConditions(state, city) {
-	//};
-
-	function changeIcon(conditions, index) {
-		var icons = new Skycons();
-		switch(conditions) {
-			case "clear-day":
-				icons.set("condition", Skycons.CLEAR_DAY);
-				break;
-			case "clear-night":
-				icons.set("condition", Skycons.CLEAR_NIGHT);
-				break;
-			case "rain":
-				icons.set("condition", Skycons.RAIN);
-				break;
-			case "snow":
-				icons.set("condition", Skycons.SNOW);
-				break;
-			case "sleet":
-				icons.set("condition", Skycons.SLEET);
-				break;
-			case "wind":
-				icons.set("condition", Skycons.WIND);
-				break;
-			case "fog":
-				icons.set("condition", Skycons.FOG);
-				break;
-			case "cloudy":
-				icons.set("condition", Skycons.CLOUDY);
-				break;
-			case "partly-cloudy-day":
-				icons.set("condition", Skycons.PARTLY_CLOUDY_DAY);
-				break;
-			case "partly-cloudy-night":
-				icons.set("condition", Skycons.PARTLY_CLOUDY_NIGHT);
-				break;
-			default:
-				if (index) {
-					icons.set("condition", Skycons.CLEAR_DAY);
-				} else {
-					icons.set("condition", Skycons.CLEAR_NIGHT);
-				}
-				break;
-		}
-		icons.play();
-			}
-
-
-
-	$("#switch_units").click(function() {
-
-		current_unit = $.cookie('unit');
-		if (current_unit == 'celsius') {
-			$.cookie('unit', 'fahrenheit', {
-				expires : 7
-			});
-		} else {
-			$.cookie('unit', 'celsius', {
-				expires : 7
-			});
-		}
-
-		window.location.reload();//force reload to make the changes appear
-		
-	});
 
 	getGeoLocation();
-	switchUnitsButtonTextUpdate();
 });
