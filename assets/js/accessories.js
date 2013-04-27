@@ -113,6 +113,7 @@ $(function() {
 		}
 		else {
 			changeAccessoryIcon("sunglasses", 0);
+			document.getElementById("sunglasses_attribute").innerHTML="Sunglasses designed by Okan Benn from The Noun Project";
 		}
 		
 		//for 2nd icon
@@ -121,9 +122,11 @@ $(function() {
 		}
 		else if (temp > 50){
 			changeAccessoryIcon("LongSleeveShirt", 1);
+			document.getElementById("long_sleeve_shirt_attribute").innerHTML="Shirt designed by Maurizio Fusillo from The Noun Project";
 		}
 		else if (temp > 40 ){
 			changeAccessoryIcon("sweatshirt", 1);
+			document.getElementById("jacket_attribute").innerHTML="Jacket designed by Toni Valdes Medina from The Noun Project";
 		}		
 		else {
 			changeAccessoryIcon("jacket", 1);
@@ -133,9 +136,11 @@ $(function() {
 		//for 3rd icon
 		if (temp > 70){
 			changeAccessoryIcon("shorts", 2);
+			document.getElementById("shorts_attribute").innerHTML="Shorts designed by iconoci from The Noun Project";
 		}
 		else {
 			changeAccessoryIcon("pants", 2);
+			document.getElementById("pants_attribute").innerHTML="Pants designed by Maurizio Fusillo from The Noun Project";
 		}
 
 		//for 4th icon
@@ -144,9 +149,11 @@ $(function() {
 		}
 		else if (temp > 30){
 			changeAccessoryIcon("sneaker", 3);
+			document.getElementById("sneaker_attribute").innerHTML="Shoe designed by Linda Yuki Nakanishi from The Noun Project";
 		}
 		else {
 			changeAccessoryIcon("snow_boots", 3);
+			document.getElementById("snow_boots_attribute").innerHTML="Boots designed by Sebastian Langer from The Noun Project";
 		}
 
 	}
