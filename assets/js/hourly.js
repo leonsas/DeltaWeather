@@ -37,6 +37,7 @@
 	var baseURL = 'https://api.forecast.io/forecast/fc590758007d8f0eb51877e6883ffda1/';
 
 	function getGeoLocation() {
+
 		//check if geolocation is enabled (i.e browser supports it, and users enables it.)
 		if (navigator.geolocation) {
 			//use HTML5 geolocation API with our callback to show the position
@@ -52,6 +53,9 @@
 	}
 
 	function getCityLocation(latitude, longitude) {
+		initialize();
+		codeLatLng(latitude, longitude);
+		
 		desired_unit = $.cookie('unit');
 
 		if (desired_unit == 'celsius')
