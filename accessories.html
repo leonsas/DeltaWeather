@@ -1,153 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 
+	<head>
+		<!-- <meta charset="utf-8"> -->
 
-<head>
-  <!-- <meta charset="utf-8"> -->
+		<title>&Delta;W Accessories</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>&Delta;W Accessories</title>
- <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<!-- Bootstrap -->
+		<link href="assets/css/bootstrap.css" rel="stylesheet" media="screen">
 
-<!-- Bootstrap -->
-<link href="assets/css/bootstrap.css" rel="stylesheet" media="screen">
+		<style type="text/css">
+			/* Sticky footer styles
+			 -------------------------------------------------- */
 
-<style type="text/css">
+			html, body {
+				height: 100%;
+				/* The html and body elements cannot have any padding or margin. */
+			}
 
-      /* Sticky footer styles
-      -------------------------------------------------- */
+			/* Wrapper for page content to push down footer */
+			#wrap {
+				min-height: 100%;
+				height: auto !important;
+				height: 100%;
+				/* Negative indent footer by it's height */
+				margin: 0 auto -165px;
+			}
 
-      html,
-      body {
-        height: 100%;
-        /* The html and body elements cannot have any padding or margin. */
-      }
+			/* Set the fixed height of the footer here */
+			#push, #footer {
+				height: 160px;
+			}
+			#footer {
+				background-color: #f5f5f5;
+			}
 
-      /* Wrapper for page content to push down footer */
-      #wrap {
-        min-height: 100%;
-        height: auto !important;
-        height: 100%;
-        /* Negative indent footer by it's height */
-        margin: 0 auto -165px;
-      }
+			/* Lastly, apply responsive CSS fixes as necessary */
+			@media (max-width: 767px) {
+				#footer {
+					margin-left: -20px;
+					margin-right: -20px;
+					padding-left: 20px;
+					padding-right: 20px;
+				}
+			}
 
-      /* Set the fixed height of the footer here */
-      #push,
-      #footer {
-        height: 160px;
-      }
-      #footer {
-        background-color: #f5f5f5;
-      }
+			/* Custom page CSS
+			 -------------------------------------------------- */
+			/* Not required for template or sticky footer method. */
 
-      /* Lastly, apply responsive CSS fixes as necessary */
-      @media (max-width: 767px) {
-        #footer {
-          margin-left: -20px;
-          margin-right: -20px;
-          padding-left: 20px;
-          padding-right: 20px;
-        }
-      }
+			#wrap > .container {
+				padding-top: 60px;
+			}
+			.container .credit {
+				margin: 20px 0;
+			}
+			.main-content {
+				text-align: center;
+			}
 
-      /* Custom page CSS
-      -------------------------------------------------- */
-      /* Not required for template or sticky footer method. */
+			.center.navbar .nav, .center.navbar .nav > li {
+				float: none;
+				display: inline-block;
+				*display: inline; /* ie7 fix */
+				*zoom: 1; /* hasLayout ie7 trigger */
+				vertical-align: top;
+			}
 
-      #wrap > .container {
-        padding-top: 60px;
-      }
-      .container .credit {
-        margin: 20px 0;
-      }
-      .main-content {
-        text-align: center;
-      }
+			.center .navbar-inner {
+				text-align: center;
+			}
+		</style>
 
-      .center.navbar .nav,
-      .center.navbar .nav > li {
-        float:none;
-        display:inline-block;
-        *display:inline; /* ie7 fix */
-        *zoom:1; /* hasLayout ie7 trigger */
-        vertical-align: top;
-      }
+		<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 
-      .center .navbar-inner {
-       text-align:center;
-      }
-    </style>
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+		<script src="assets/js/jquery.cookie.js"></script>
+		<script src="skycons-master/skycons.js"></script>
+		<script src="assets/js/accessories.js"></script>
 
-<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+	</head>
 
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-<script src="assets/js/jquery.cookie.js"></script>
-<script src="skycons-master/skycons.js"></script>
-<script src="assets/js/accessories.js"></script>
+	<body>
+		<div id="wrap">
 
-</head>
+			<div class="navbar navbar-fixed-top center">
+				<div class="navbar-inner">
+					<div class="container">
+						<a class="brand" href="#">&Delta;W</a>
+						<h4 class="brand" id="current_feels_like" href="#"></h4>
+						<h5 class="brand" id="current_location"></h5>
+					</div>
+				</div>
+			</div>
 
+			<div class="main-content">
+				<ul style="list-style-type: none;">
+					<li>
+						<a href="accessories.html"><img class="accessory-icon"></a>
+					</li>
+					<li>
+						<a href="accessories.html"><img class="accessory-icon"></a>
+					</li>
+					<li>
+						<a href="accessories.html"><img class="accessory-icon"></a>
+					</li>
+					<li>
+						<a href="accessories.html"><img class="accessory-icon"></a>
+					</li>
+				</ul>
 
+			</div>
 
-<body>
-<div id="wrap">
+			<div id="push"></div>
 
-  <div class="navbar navbar-fixed-top center">
-    <div class="navbar-inner">
-      <div class="container">
-      <a class="brand" href="#">&Delta;W</a>
-       <h4 class="brand" id="current_feels_like" href="#"></h4>
-       <h5 class="brand" id="current_location"></h5>
-      </div>
-    </div>
-  </div>
+		</div>
 
+		<div class="navbar navbar-fixed-bottom center">
+			<div class="navbar-inner" style="text-align: center;">
+				<ul class="nav">
+					<li >
+						<a href="index.html"><img src="assets/img/home.png" alt="home icon for homepage" style="width: auto; height: auto;"></a>
+					</li>
+					<li>
+						<a href="hourly.html"><img src="assets/img/hourly.png" alt="clock icon for hourly weather"></a>
+					</li>
+					<li class="active" >
+						<a href="accessories.html"><img src="assets/img/Accessories/Tshirt.png" alt="Tshirt icon for accessories page"></a>
+					</li>
+					<li>
+						<a href="licenses.html">Licenses</a>
+					</li>
+				</ul>
+			</p>
+			</div>
+		</div>
 
-
-<div class="main-content">
-  <ul style="list-style-type: none;">
-      <li><a href="accessories.html"><img class="accessory-icon"></a></li>
-      <li><a href="accessories.html"><img class="accessory-icon"></a></li>
-      <li><a href="accessories.html"><img class="accessory-icon"></a></li>
-      <li><a href="accessories.html"><img class="accessory-icon"></a></li>
-</ul>
-
-</div>
-
-<div id="push"></div>
-
-</div>
-
-
-
-  <div class="navbar navbar-fixed-bottom center">
-  <div class="navbar-inner" style="text-align: center;">
-    <div class="container">
-    <ul class="nav">
-      <li><a href="index.html"><img src="assets/img/home.png" alt="home icon for homepage" style="width: auto; height: auto;"></a></li>
-      <li><a href="hourly.html"><img src="assets/img/hourly.png" alt="clock icon for hourly weather"></a></li>
-      <li class="active"><a href="accessories.html"><img src="assets/img/Accessories/Tshirt.png" alt="umbrella icon for accessories page"></a></li>
-    </ul>
-  </div>
-	<p style = "text-align:right;font-size:10px;">Home from The Noun Project</p>
-	<p style = "text-align:right;font-size:10px;">Time designed by Richard de Vos from The Noun Project</p>
-  	<p id = "sunglasses_attribute" style = "text-align:right;font-size:10px;"></p>
-	<p id = "long_sleeve_shirt_attribute" style = "text-align:right;font-size:10px;"></p>
-	<p id = "jacket_attribute" style = "text-align:right;font-size:10px;"></p>
-	<p id = "shorts_attribute" style = "text-align:right;font-size:10px;"></p>
-	<p id = "pants_attribute" style = "text-align:right;font-size:10px;"></p>
-	<p id = "sneaker_attribute" style = "text-align:right;font-size:10px;"></p>
-	<p id = "snow_boots_attribute" style = "text-align:right;font-size:10px;"></p>
-	<p style = "text-align:right;font-size:12px;">
-		<a href="http://forecast.io/#/f/42.0580,-87.6749">Powered by Forecast.io</a>
-   </p>
-</div>
-</div>
-
-
-
-
-
-</body>
+	</body>
 </html>
