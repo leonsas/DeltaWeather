@@ -3,7 +3,35 @@
  * We'll need user's location to get the local weather.
  *
  */
-$(function() {
+
+ var geocoder;
+ $(function() {
+ 	function initialize() {
+ 		console.log("entered initialize");
+ 		geocoder = new google.maps.Geocoder();
+ 		var latlng = new google.maps.LatLng(40.730885, -73.997383);
+ 	}
+
+ 	function codeLatLng(lat, lng) {
+ 		console.log("entered Codelatlng");
+ 		var latlng = new google.maps.LatLng(lat, lng);
+ 		geocoder.geocode({
+ 			'latLng' : latlng
+ 		}, function(results, status) {
+ 			if (status == google.maps.GeocoderStatus.OK) {
+ 				if (results[1]) {
+ 					
+ 					$('#current_location').text(results[2].formatted_address);
+ 				} else {
+ 					console.log('No results found');
+ 				}
+ 			} else {
+ 				console.log('Geocoder failed due to: ' + status);
+ 			}
+ 		});
+ 	}
+
+
 
 	// api key from Forecast.io
 	var baseURL = 'https://api.forecast.io/forecast/fc590758007d8f0eb51877e6883ffda1/';
@@ -17,6 +45,7 @@ $(function() {
 			alert("geolocation not supported");
 		}
 	}
+
 
 	function getConditions(position) {
 		getCityLocation(position.coords.latitude, position.coords.longitude);

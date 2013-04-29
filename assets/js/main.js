@@ -38,12 +38,6 @@ $(function() {
 		}
 	}
 
-	// this is using my api key from wunderground
-	// 394yellow@gmail.com 	def220061728b00b
-	// leonsassonha  da56c81ebb4c6a60
-	// fitzcn 52469e66c6aa5600
-	// grossbill6 1d0606d6ee23da9e
-	//var baseURL = 'http://api.wunderground.com/api/1d0606d6ee23da9e';
 	//key from forecast.io
 	var baseURL = 'https://api.forecast.io/forecast/fc590758007d8f0eb51877e6883ffda1/';
 

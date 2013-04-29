@@ -15,7 +15,7 @@ $(function() {
 		}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
 				if (results[1]) {					
-					$('#current_location').text(results[0].address_components[3].short_name);
+					$('#current_location').text(results[2].formatted_address);
 				} 
 				else {
 					console.log('No results found');
