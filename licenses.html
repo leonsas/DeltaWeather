@@ -1,11 +1,13 @@
+<!--https://kuler.adobe.com/#themeID/1084193-->
+
 <!DOCTYPE html>
 <html lang="en">
 
 	<head>
 		<!-- <meta charset="utf-8"> -->
 
-		<title>&Delta;W Accessories</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>&Delta;Weather</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 		<!-- Bootstrap -->
 		<link href="assets/css/bootstrap.css" rel="stylesheet" media="screen">
@@ -56,7 +58,9 @@
 			.container .credit {
 				margin: 20px 0;
 			}
-			.main-content {
+			
+
+			.navbar {
 				text-align: center;
 			}
 
@@ -71,47 +75,39 @@
 			.center .navbar-inner {
 				text-align: center;
 			}
+			
+			.main-content{
+				padding: 100px;
+				
+				
+			}
 		</style>
 
 		<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 
-		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-		<script src="assets/js/jquery.cookie.js"></script>
-		<script src="skycons-master/skycons.js"></script>
-		<script src="assets/js/accessories.js"></script>
-
 	</head>
 
 	<body>
-		<div id="wrap">
 
-			<div class="navbar navbar-fixed-top center">
+		<div id="wrap">
+			<div class="navbar navbar-fixed-top">
 				<div class="navbar-inner">
-					<div class="container">
-						<a class="brand" href="#">&Delta;W</a>
-						<h4 class="brand" id="current_feels_like" href="#"></h4>
-						<h5 class="brand" id="current_location"></h5>
-					</div>
+					<a class="brand" href="#">&Delta;W</a>
 				</div>
 			</div>
 
 			<div class="main-content">
-				<ul style="list-style-type: none;">
-					<li>
-						<a href="accessories.html"><img class="accessory-icon"></a>
-					</li>
-					<li>
-						<a href="accessories.html"><img class="accessory-icon"></a>
-					</li>
-					<li>
-						<a href="accessories.html"><img class="accessory-icon"></a>
-					</li>
-					<li>
-						<a href="accessories.html"><img class="accessory-icon"></a>
-					</li>
+				<ul>
+					<p >
+						Home from The Noun Project
+					</p>
+					<p >
+						Time designed by Richard de Vos from The Noun Project
+					</p>
+					<p >
+						<a href="http://forecast.io/#/f/42.0580,-87.6749">Powered by Forecast.io</a>
+					</p>
 				</ul>
-
 			</div>
 
 			<div id="push"></div>
@@ -119,24 +115,17 @@
 		</div>
 
 		<div class="navbar navbar-fixed-bottom center">
-			<div class="navbar-inner" style="text-align: center;">
-				<ul class="nav">
-					<li >
-						<a href="index.html"><img src="assets/img/home.png" alt="home icon for homepage" style="width: auto; height: auto;"></a>
-					</li>
-					<li>
-						<a href="hourly.html"><img src="assets/img/hourly.png" alt="clock icon for hourly weather"></a>
-					</li>
-					<li class="active" >
-						<a href="accessories.html"><img src="assets/img/Accessories/Tshirt.png" alt="Tshirt icon for accessories page"></a>
-					</li>
-					<li>
-						<a href="licenses.html">Licenses</a>
-					</li>
-				</ul>
-			</p>
-			</div>
-		</div>
+  <div class="navbar-inner" style="text-align: center;">
+    <ul class="nav">
+      <li ><a href="index.html"><img src="assets/img/home.png" alt="home icon for homepage" style="width: auto; height: auto;"></a></li>
+      <li><a href="hourly.html"><img src="assets/img/hourly.png" alt="clock icon for hourly weather"></a></li>
+      <li><a href="accessories.html"><img src="assets/img/Accessories/Tshirt.png" alt="Tshirt icon for accessories page"></a></li>
+    	<li><a class="active" href="licenses.html">Licenses</a></li>
+    </ul>
+   </p>
+  </div>
+</div>
 
 	</body>
+
 </html>
