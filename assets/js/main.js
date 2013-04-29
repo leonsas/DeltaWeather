@@ -73,40 +73,13 @@ $(function() {
 			dataType : "jsonp",
 			success : function(data) {
 
-				//state = data.location.state;
-				//city = data.location.city;
-				//$('#current_location').text(city)
-				//Lets get the current conditions for this state and city.
-				//getCurrentConditions(state, city);
-				//new URL
-				//conditionURL = baseURL + '/conditions/yesterday/astronomy/q/' + state + '/' + city + '.json';
+				
 				var delta_string = document.getElementById('delta_string');
 				var currentlyfeelhtml = document.getElementById("current_feels_like");
 
-				//now query wunderground for current conditions for the city/state, and display 		the Feels Like temp.
-				/*$.ajax({
-				url : conditionURL,
-				dataType : "jsonp",
-				success : function(data) {*/
-
-				//var date = new Date();
-				//var hour = date.getHours();
+				console.log(data);
 				var time = data.currently.time;
-				/*
-				var j = 0;
-				var k = 0;
-				while(j != hour){
-				j = data.history.observations[k].date.hour;
-				k++;
-				}
-				k--;
-				weatherpic = document.getElementById('weatherpic');
-				current = data.current_observation.temp_f;
-				yesterday = data.history.observations[k].tempi;
-				*/
-				//var sunrise = data.moon_phase.sunrise.hour;
 				var sunrise = data.daily.sunriseTime;
-				//var sunset = data.moon_phase.sunset.hour;
 				var sunset = data.daily.sunsetTime;
 				var check = 1;
 				if (time < sunrise || time > sunset) {
