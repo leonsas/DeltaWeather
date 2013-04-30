@@ -104,14 +104,14 @@ $(function() {
 		}
 		console.log(temp);
 
-		precip = data.currently.precipIntensity;
-
+		icon_type = data.currently.icon;
+		
 		//for 1st icon
 
-		if (precip > .01){
+		if (icon_type == "rain"){
 			changeAccessoryIcon("umbrella", 0);
 		}
-		else {
+		else if(icon_type == "clear-day" || icon_type == "partly-cloud-day"){
 			changeAccessoryIcon("sunglasses", 0);
 			document.getElementById("sunglasses_attribute").innerHTML="Sunglasses designed by Okan Benn from The Noun Project";
 		}
@@ -144,18 +144,20 @@ $(function() {
 		}
 
 		//for 4th icon
-		if (temp > 70){
-			changeAccessoryIcon("flipflops", 3);
-		}
-		else if (temp > 30){
-			changeAccessoryIcon("sneaker", 3);
-			document.getElementById("sneaker_attribute").innerHTML="Shoe designed by Linda Yuki Nakanishi from The Noun Project";
-		}
-		else {
+		if(icon_type == "snow"){
 			changeAccessoryIcon("snow_boots", 3);
 			document.getElementById("snow_boots_attribute").innerHTML="Boots designed by Sebastian Langer from The Noun Project";
 		}
-
+		else if(icon_type == "rain"){
+			changeAccessoryIcon("rainboots",3);
+		}
+		else if (temp > 70){
+			changeAccessoryIcon("flipflops", 3);
+		}
+		else{
+			changeAccessoryIcon("sneaker", 3);
+			document.getElementById("sneaker_attribute").innerHTML="Shoe designed by Linda Yuki Nakanishi from The Noun Project";
+		}
 	}
 
 	function changeAccessoryIcon(clothingtop, position) {
