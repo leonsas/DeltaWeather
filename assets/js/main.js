@@ -87,7 +87,7 @@ $(function() {
 				}
 
 				weatherpic = document.getElementById('weatherpic');
-				current = data.currently.temperature;
+				current = Math.round(data.currently.temperature);
 				if (desired_unit == 'celsius') {
 					//current = data.current_observation.temp_c;
 					current_feels_like.innerHTML = 'Feels like ' + current + '&#176; C';

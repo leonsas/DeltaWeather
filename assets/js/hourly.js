@@ -74,7 +74,7 @@
 				currtemp = data.hourly.data[0].temperature;
 				hourlies = getHourlyData(currtemp,data);
 				console.log(data);
-					current = data.currently.temperature;
+					current = Math.round(data.currently.temperature);
 					
 				if (desired_unit == 'celsius') {
 					

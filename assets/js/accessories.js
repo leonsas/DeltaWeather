@@ -14,20 +14,17 @@ $(function() {
 			'latLng' : latlng
 		}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
-				if (results[1]) {					
+				if (results[1]) {
 					$('#current_location').text(results[2].formatted_address);
-				} 
-				else {
+				} else {
 					console.log('No results found');
 				}
-			} 
-			else {
+			} else {
 				console.log('Geocoder failed due to: ' + status);
 			}
 		});
 	}
 
-	
 	//key from forecast.io
 	var baseURL = 'https://api.forecast.io/forecast/fc590758007d8f0eb51877e6883ffda1/';
 
@@ -45,8 +42,7 @@ $(function() {
 		getCityLocation(position.coords.latitude, position.coords.longitude);
 	}
 
-
-		function getCityLocation(latitude, longitude) {
+	function getCityLocation(latitude, longitude) {
 		initialize();
 		codeLatLng(latitude, longitude);
 		//new URL that does a geolookup to get a city name from lat/lon
@@ -64,12 +60,12 @@ $(function() {
 			dataType : "jsonp",
 			success : function(data) {
 				displayAccessories(data);
-				
+
 				var delta_string = document.getElementById('delta_string');
 				var currentlyfeelhtml = document.getElementById("current_feels_like");
 
 				var time = data.currently.time;
-				
+
 				var sunrise = data.daily.sunriseTime;
 
 				var sunset = data.daily.sunsetTime;
@@ -78,85 +74,74 @@ $(function() {
 					check = 0;
 				}
 
-				current = data.currently.temperature;
+				current = Math.round(data.currently.temperature);
 				if (desired_unit == 'celsius') {
-					//current = data.current_observation.temp_c;
+					
 					$("#current_feels_like").text('Feels like ' + current + '\u00B0 C');
-					//yesterday = data.history.dailysummary[0].meantempm;
+				
 				} else {
-					//current = data.current_observation.temp_f;
+					
 					$("#current_feels_like").text('Feels like ' + current + '\u00B0 F');
-					//yesterday = data.history.dailysummary[0].meantempi;
-				}	
+					
+				}
 			}
 		});
 
 	};
 
-
-	
 	function displayAccessories(data) {
 		console.log("displayaccesories");
 		temp = data.currently.temperature;
 		desired_unit = $.cookie('unit');
-		if (desired_unit == "celsius"){
-			temp = temp *1.8 + 32;
+		if (desired_unit == "celsius") {
+			temp = temp * 1.8 + 32;
 		}
 		console.log(temp);
 
 		icon_type = data.currently.icon;
-		
+
 		//for 1st icon
 
-		if (icon_type == "rain"){
+		if (icon_type == "rain") {
 			changeAccessoryIcon("umbrella", 0);
-		}
-		else if(icon_type == "clear-day" || icon_type == "partly-cloud-day"){
+		} else if (icon_type == "clear-day" || icon_type == "partly-cloud-day") {
 			changeAccessoryIcon("sunglasses", 0);
-			document.getElementById("sunglasses_attribute").innerHTML="Sunglasses designed by Okan Benn from The Noun Project";
+			document.getElementById("sunglasses_attribute").innerHTML = "Sunglasses designed by Okan Benn from The Noun Project";
 		}
-		
+
 		//for 2nd icon
-		if (temp > 60){
+		if (temp > 60) {
 			changeAccessoryIcon("Tshirt", 1);
-		}
-		else if (temp > 50){
+		} else if (temp > 50) {
 			changeAccessoryIcon("LongSleeveShirt", 1);
-			document.getElementById("long_sleeve_shirt_attribute").innerHTML="Shirt designed by Maurizio Fusillo from The Noun Project";
-		}
-		else if (temp > 40 ){
+			document.getElementById("long_sleeve_shirt_attribute").innerHTML = "Shirt designed by Maurizio Fusillo from The Noun Project";
+		} else if (temp > 40) {
 			changeAccessoryIcon("sweatshirt", 1);
-			document.getElementById("jacket_attribute").innerHTML="Jacket designed by Toni Valdes Medina from The Noun Project";
-		}		
-		else {
+			document.getElementById("jacket_attribute").innerHTML = "Jacket designed by Toni Valdes Medina from The Noun Project";
+		} else {
 			changeAccessoryIcon("jacket", 1);
 		}
 
-
 		//for 3rd icon
-		if (temp > 70){
+		if (temp > 70) {
 			changeAccessoryIcon("shorts", 2);
-			document.getElementById("shorts_attribute").innerHTML="Shorts designed by iconoci from The Noun Project";
-		}
-		else {
+			document.getElementById("shorts_attribute").innerHTML = "Shorts designed by iconoci from The Noun Project";
+		} else {
 			changeAccessoryIcon("pants", 2);
-			document.getElementById("pants_attribute").innerHTML="Pants designed by Maurizio Fusillo from The Noun Project";
+			document.getElementById("pants_attribute").innerHTML = "Pants designed by Maurizio Fusillo from The Noun Project";
 		}
 
 		//for 4th icon
-		if(icon_type == "snow"){
+		if (icon_type == "snow") {
 			changeAccessoryIcon("snow_boots", 3);
-			document.getElementById("snow_boots_attribute").innerHTML="Boots designed by Sebastian Langer from The Noun Project";
-		}
-		else if(icon_type == "rain"){
-			changeAccessoryIcon("rainboots",3);
-		}
-		else if (temp > 70){
+			document.getElementById("snow_boots_attribute").innerHTML = "Boots designed by Sebastian Langer from The Noun Project";
+		} else if (icon_type == "rain") {
+			changeAccessoryIcon("rainboots", 3);
+		} else if (temp > 70) {
 			changeAccessoryIcon("flipflops", 3);
-		}
-		else{
+		} else {
 			changeAccessoryIcon("sneaker", 3);
-			document.getElementById("sneaker_attribute").innerHTML="Shoe designed by Linda Yuki Nakanishi from The Noun Project";
+			document.getElementById("sneaker_attribute").innerHTML = "Shoe designed by Linda Yuki Nakanishi from The Noun Project";
 		}
 	}
 
@@ -165,7 +150,6 @@ $(function() {
 		$(".accessory-icon").eq(position).attr("src", accpathway);
 
 	}
-
 
 	getGeoLocation();
 });
