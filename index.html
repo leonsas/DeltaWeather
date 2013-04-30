@@ -11,7 +11,7 @@
 
 		<!-- Bootstrap -->
 		<link href="assets/css/bootstrap.css" rel="stylesheet" media="screen">
-
+<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 		<style type="text/css">
 			/* Sticky footer styles
 			 -------------------------------------------------- */
@@ -39,15 +39,16 @@
 			}
 
 			/* Lastly, apply responsive CSS fixes as necessary */
-			@media (max-width: 767px) {
-				#footer {
-					margin-left: -20px;
-					margin-right: -20px;
-					padding-left: 20px;
-					padding-right: 20px;
-				}
-			}
-
+			/*
+			 @media (max-width: 767px) {
+			 #footer {
+			 margin-left: -20px;
+			 margin-right: -20px;
+			 padding-left: 20px;
+			 padding-right: 20px;
+			 }
+			 }
+			 */
 			/* Custom page CSS
 			 -------------------------------------------------- */
 			/* Not required for template or sticky footer method. */
@@ -60,7 +61,6 @@
 			}
 			.main-content {
 				text-align: center;
-				padding: 100px;
 			}
 
 			.navbar {
@@ -84,9 +84,19 @@
 				padding: 0px;
 				font-size: 8px;
 			}
+
+			.footer img {
+				max-width: 100%;
+			}
+			.active_page {
+			}
+			color: #ffffff;
+			text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+			background-color: #0088cc;
+			}
 		</style>
 
-		<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+		
 
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
@@ -101,7 +111,7 @@
 		<div id="wrap">
 			<div class="navbar navbar-fixed-top">
 				<div class="navbar-inner">
-					<div class="offset4">
+					<div class="">
 						<a class="brand" href="#">&Delta;W</a>
 						<h4 class="brand" id="current_feels_like" href="#"></h4>
 						<h5 class="brand" id="current_location"></h5>
@@ -126,19 +136,14 @@
 		</div>
 
 		<div class="navbar navbar-fixed-bottom center">
-			<div class="navbar-inner" style="text-align: center;">
-				<ul class="nav">
-					<li class="active">
-						<a href="index.html"><img src="assets/img/home.png" alt="home icon for homepage" style="width: auto; height: auto;"></a>
-					</li>
-					<li>
-						<a href="hourly.html"><img src="assets/img/hourly.png" alt="clock icon for hourly weather"></a>
-					</li>
-					<li>
-						<a href="accessories.html"><img src="assets/img/Accessories/Tshirt.png" alt="Tshirt icon for accessories page"></a>
-					</li>
+			<div class="navbar-inner" >
 
-				</ul>
+				<a href="index.html"><img class="active_page" src="assets/img/home.png" alt="home icon for homepage" ></a>
+
+				<a href="hourly.html"><img src="assets/img/hourly.png" alt="clock icon for hourly weather"></a>
+
+				<a href="accessories.html"><img src="assets/img/Accessories/Tshirt.png" alt="Tshirt icon for accessories page"></a>
+
 				</p>
 			</div>
 			<div id="attributions">
