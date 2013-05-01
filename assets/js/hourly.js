@@ -60,34 +60,55 @@
 
 		if (desired_unit == 'celsius')
 		{
-		queryURL = baseURL + latitude + ',' + longitude + '?exclude=minutely,daily,alerts,flags&units=si';
+		queryURL = baseURL + latitude + ',' + longitude + '?exclude=minutely,alerts,flags&units=si';
 		}
 		else
 		{
-		queryURL = baseURL + latitude + ',' + longitude + '?exclude=minutely,daily,alerts,flags';
-
+		queryURL = baseURL + latitude + ',' + longitude + '?exclude=minutely,alerts,flags';
 		}
 		$.ajax({
 			url : queryURL,
 			dataType : "jsonp",
 			success : function(data) {
-				currtemp = data.hourly.data[0].temperature;
-				hourlies = getHourlyData(currtemp,data);
-				console.log(data);
-					current = Math.round(data.currently.temperature);
-					
+				currtemp = Math.round(data.hourly.data[0].temperature);
+				yesterdayTime = data.currently.time - 86400;
 				if (desired_unit == 'celsius') {
-					
-					$("#current_feels_like").text('Feels like ' + current + '\u00B0 C');
-					
+					$("#current_feels_like").text('Feels like ' + currtemp + '\u00B0 C');
+					yesterdayURL = baseURL + latitude + ',' + longitude + ',' + yesterdayTime + '?exclude=minutely,currently,daily,alerts,flags&units=si';
+					overlapURL = baseURL + latitude + ',' + longitude + ',' + data.currently.time + '?exclude=minutely,currently,daily,alerts,flags&units=si';
 				} else {
-					
-					$("#current_feels_like").text('Feels like ' + current + '\u00B0 F');
-				
+					$("#current_feels_like").text('Feels like ' + currtemp + '\u00B0 F');
+					yesterdayURL = baseURL + latitude + ',' + longitude + ',' + yesterdayTime + '?exclude=minutely,currently,daily,alerts,flags';
+					overlapURL = baseURL + latitude + ',' + longitude + ',' + data.currently.time + '?exclude=minutely,currently,daily,alerts,flags';
 				}
-				console.log(hourlies);
-				linechart(hourlies);
-				
+				$.ajax({
+					url : yesterdayURL,
+					dataType : "jsonp",
+					success : function(data2) {
+						reftime = data.hourly.data[0].time - 86400;
+						index = 0;
+						while (reftime != data2.hourly.data[index].time)
+						{
+						index++;
+						}
+						if (index + 11 > 23)
+						{
+						$.ajax({
+							url : overlapURL,
+							dataType : "jsonp",
+							success : function(data3) {
+								hourlies = getHourlyData(data,data2,data3,index,1);
+								linechart(hourlies);
+							}
+						});
+						}
+						else
+						{
+							hourlies = getHourlyData(data,data2,undefined,index,0);
+							linechart(hourlies);
+						}
+					}
+				});
 			}
 		});
 		
@@ -121,35 +142,21 @@
 	};
 
 	function linechart(input) {
-		labels= []
-		data_colder = [];
-		data_warmer =[];
-			for (i = 0; i< 12;i++){
-				labels.push(input[i].hour);
-				if (input[i].direction == "colder"){
-				data_colder.push(input[i].percentage_change);
-				}
-				else{
-					data_warmer.push(input[i].percentage_change);
-				}
-			}
-		console.log(data_warmer)
 		var lineChartData = {
-			labels : labels,
+			labels : [input[0].hour,input[1].hour,input[2].hour,input[3].hour,input[4].hour,input[5].hour,input[6].hour,input[7].hour,input[8].hour,input[9].hour,input[10].hour,input[11].hour],
 			datasets : [{
+				fillColor : "rgba(220,220,220,0.5)",
+				strokeColor : "rgba(220,220,220,1)",
+				data : [input[0].yesterdaytemp,input[1].yesterdaytemp,input[2].yesterdaytemp,input[3].yesterdaytemp,input[4].yesterdaytemp,input[5].yesterdaytemp,input[6].yesterdaytemp,input[7].yesterdaytemp,input[8].yesterdaytemp,input[9].yesterdaytemp,input[10].yesterdaytemp,input[11].yesterdaytemp]
+			},
+			{
 				fillColor : "rgba(151,187,205,0.5)",
 				strokeColor : "rgba(151,187,205,1)",
-				pointColor : "rgba(151,187,205,1)",
-				pointStrokeColor : "#fff",
-				data : data_colder
-			}
-			
-			
-			]
+				data : [input[0].todaytemp,input[1].todaytemp,input[2].todaytemp,input[3].todaytemp,input[4].todaytemp,input[5].todaytemp,input[6].todaytemp,input[7].todaytemp,input[8].todaytemp,input[9].todaytemp,input[10].todaytemp,input[11].todaytemp]
+			}]
 		}
 
 		var myLine = $("#delta").get(0).getContext("2d");
-
 		var myNewChart = new Chart(myLine).Bar(lineChartData, {
 			scaleShowGridLines : false,
 			scaleStartValue : 0,
@@ -158,20 +165,46 @@
 		});
 	}
 
-	function getHourlyData(currtemp, data) {
+	function getHourlyData(data, data2, data3, index, overlap) {
 		hourlies = [];
-		for ( i = 1; i < 13; i++) {
-			var timestamp = new Date(data.hourly.data[i].time * 1000);
-			hour_string = timestamp.toLocaleTimeString();
-			feels_like_temp = data.hourly.data[i].temperature;
-			delta = feels_like_temp - currtemp;
+		if (overlap == 0)
+		{
+			for ( i = 1; i < 13; i++) {
+			todaytime = new Date(data.hourly.data[i].time * 1000);
+			yesterdaytime = new Date(data2.hourly.data[index + i - 1].time * 1000);
+			hour_string = todaytime.toLocaleTimeString();
+			today = Math.round(data.hourly.data[i].temperature);
+			yesterday = Math.round(data2.hourly.data[index + i - 1].temperature);
 			hourlies.push({
 				hour : hour_string,
-				temp : feels_like_temp,
-				magnitude : Math.abs(delta),
-	 			direction : delta ? delta < 0 ? 'colder' : 'warmer' : 0,
-	 			percentage_change : Math.abs(delta) * 100 / currtemp
+				todaytemp : today,
+				yesterdaytemp : yesterday
 			});
+			}
+		}
+		else
+		{
+			for ( i = 1; i < 13; i++) {
+				todaytime = new Date(data.hourly.data[i].time * 1000);
+				if (index + i - 1 <= 23)
+				{
+					yesterday = Math.round(data2.hourly.data[index + i - 1].temperature);
+					yesterdaytime = data2.hourly.data[index + i - 1].time;
+				}
+				else
+					{
+						newindex = (index + i - 1) - 24;
+						yesterday = Math.round(data3.hourly.data[newindex].temperature);
+						yesterdaytime = data3.hourly.data[newindex].time;
+					}
+					hour_string = todaytime.toLocaleTimeString();
+					today = Math.round(data.hourly.data[i].temperature);
+					hourlies.push({
+						hour : hour_string,
+						todaytemp : today,
+						yesterdaytemp : yesterday
+						});
+				}
 		}
 		return hourlies;
 	};
