@@ -134,50 +134,51 @@ $(function() {
 	function flotchart(input) {
 		d = [input[0].yesterdaytemp, input[1].yesterdaytemp, input[2].yesterdaytemp, input[3].yesterdaytemp, input[4].yesterdaytemp, input[5].yesterdaytemp, input[6].yesterdaytemp, input[7].yesterdaytemp, input[8].yesterdaytemp, input[9].yesterdaytemp, input[10].yesterdaytemp, input[11].yesterdaytemp]
 		dd = [input[0].todaytemp, input[1].todaytemp, input[2].todaytemp, input[3].todaytemp, input[4].todaytemp, input[5].todaytemp, input[6].todaytemp, input[7].todaytemp, input[8].todaytemp, input[9].todaytemp, input[10].todaytemp, input[11].todaytemp]
-
+		la = [input[0].hour, input[1].hour, input[2].hour, input[3].hour, input[4].hour, input[5].hour, input[6].hour, input[7].hour, input[8].hour, input[9].hour, input[10].hour, input[11].hour]
 		d1 = []
 		d2 = []
 		c = 0;
-		for ( i = 0; i < d.length * 2; i = i + 2) {
+		for ( i = 0; i < d.length; i++) {
 			c += 1
-			d1.push([i, d[c]])
+			d1.push([la[i], d[i]]);
 		}
 		c = 0;
-		for ( i = 1; i < d.length * 2; i = i + 2) {
+		for ( i = 0; i < dd.length; i++) {
 			c += 1
-			d2.push([i, dd[c]])
+			d2.push([la[i], dd[i]]);
 		}
 
-		
 		$.plot("#placeholder", [{
 			data : d2,
-
+			color: '#441ee2',
+			label: "today",
 			bars : {
-				show : true
+				show : true,
+				align : "left",
+				barWidth : 0.3,
 			}
 		}, {
 			data : d1,
-
+			color: '#60696e',
+			label : "yesterday",
+			xaxis:1,
 			bars : {
-				show : true
+				show : true,
+				align : "right",
+				barWidth : 0.3,
 			}
-		}],{
+		}], {
 			
-			xaxis: {
-				show: true,
-				mode: "categories"
+			xaxis : {
+				show : true,
+				mode: "categories",
+				rotateTicks: 45
+				
 			},
-			yaxis: {
-				show: false
+			yaxis : {
+				show : false
 			},
-			grid: {
-				borderWidth: {
-					top: 1,
-					right: 1,
-					bottom: 2,
-					left: 2
-				}
-			}
+
 		});
 
 	}
